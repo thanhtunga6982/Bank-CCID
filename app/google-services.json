@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "415790685474",
+    "firebase_url": "https://appconnectdeal.firebaseio.com",
+    "project_id": "appconnectdeal",
+    "storage_bucket": "appconnectdeal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415790685474:android:e27bc195b08af618",
+        "android_client_info": {
+          "package_name": "com.example.app.bank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415790685474-429u01q9iltm5a8ggl4sed9h0h3aa0ok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app.bank",
+            "certificate_hash": "4565d42e568db85bb1dc09f4177abc4f53bd4c6c"
+          }
+        },
+        {
+          "client_id": "415790685474-f64av99jqu6o2218c4knhoq9j34g8nhv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxWk_qYgwYhl9ZY2Kne7Sxd2mNnLcbQ68"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415790685474-f64av99jqu6o2218c4knhoq9j34g8nhv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

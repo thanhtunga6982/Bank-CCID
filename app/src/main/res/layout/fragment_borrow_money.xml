@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <EditText
+            android:id="@+id/edtMoneyBorrow"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:maxLength="8"
+            android:inputType="numberDecimal"/>
+    <TextView
+            android:id="@+id/tvTitleHeader"
+            android:text="Vay tiền"
+            android:textSize="20dp"
+            android:textColor="@color/colorBlack"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <LinearLayout
+            android:id="@+id/llFOrm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:background="#FFF"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleHeader">
+
+        <TextView
+                android:id="@+id/tvMoney"
+                android:layout_width="match_parent"
+                android:hint="Số tiền cần vay"
+                android:textSize="15dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="5dp"
+                android:background="@drawable/bg_edt_underline"
+                android:layout_height="wrap_content"/>
+        <EditText
+                android:id="@+id/edtCollateral"
+                android:layout_marginTop="10dp"
+                android:hint="Tài sản thế chấp"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <EditText
+                android:id="@+id/edtPlan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phương án trả nợ "
+                android:textSize="15dp"
+
+                android:layout_marginTop="10dp"/>
+    </LinearLayout>
+    <Button
+            android:id="@+id/btnOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorBlack"
+            android:enabled="false"
+            android:background="@drawable/custom_background_btn_app"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llFOrm"
+            android:text="OK"/>
+
+
+</android.support.constraint.ConstraintLayout>
