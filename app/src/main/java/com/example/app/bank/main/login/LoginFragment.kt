@@ -72,6 +72,8 @@ class LoginFragment : BaseFragment() {
             line01.isSelected = false
             imgPassword.isSelected = true
             line02.isSelected = true
+
+            //TODO
         }
 
         btnSubmit.setOnClickListener {
