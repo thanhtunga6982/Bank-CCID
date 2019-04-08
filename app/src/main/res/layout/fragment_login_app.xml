@@ -15,17 +15,6 @@
             android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toTopOf="@+id/ctForm"/>
 
-    <EditText
-            android:id="@+id/edtHandle"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            tools:ignore="MissingConstraints"/>
-    <EditText
-            android:id="@+id/edtHandlePassword"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            tools:ignore="MissingConstraints"/>
-
     <android.support.constraint.ConstraintLayout
             android:id="@+id/ctForm"
             android:layout_width="match_parent"
@@ -51,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-            <TextView
+            <EditText
                     android:id="@+id/edtName"
                     android:hint="Email"
                     android:textSize="16dp"
@@ -92,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-            <TextView
+            <EditText
                     android:id="@+id/edtPassword"
                     android:hint="Password"
                     android:background="@null"
