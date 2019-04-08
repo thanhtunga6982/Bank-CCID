@@ -8,10 +8,12 @@ import com.example.app.bank.main.login.MainBankContainer
 
 class MainActivity : BaseActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         replaceFragment(MainBankContainer(), true)
+
     }
 
     override fun onBackPressed() {

@@ -11,7 +11,9 @@ import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.afterTextChanged
+import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.showKeyboard
+import com.example.app.bank.extention.visible
 import com.example.app.bank.main.borrowmoney.borrow.ConditionBorrowMoney
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -21,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_login_app.*
 
 
 class LoginFragment : BaseFragment() {
-
 
     private lateinit var viewModel: LoginFragmentViewModel
     private lateinit var auth: FirebaseAuth
@@ -36,22 +37,35 @@ class LoginFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUserList()
         edtName.setText("thanhtunga0000@gmail.com")
         edtPassword.setText("Thanhtung123123")
         initListener()
     }
 
+    override fun onBindViewModel() {
+        addDisposables(
+            viewModel.loadingSubject
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    println("TTTTT$it")
+                    if (it)
+                        progressBar.visible()
+                    else {
+                        progressBar.gone()
+                    }
+                },{})
+        )
+    }
+
     @SuppressLint("SetTextI18n")
     private fun initListener() {
-
         edtHandle.afterTextChanged {
             edtName.text = it
         }
         edtHandlePassword.afterTextChanged {
             edtPassword.text = it
         }
-
 
         edtName.setOnClickListener {
             edtHandle.apply {
@@ -88,6 +102,7 @@ class LoginFragment : BaseFragment() {
             }
 
             signInWithEmailAndPassword(email, password)
+            println("TTTTclick")
         }
     }
 
@@ -109,7 +124,7 @@ class LoginFragment : BaseFragment() {
 
     @SuppressLint("CheckResult")
     private fun handePostUIDUser(email: String) {
-        viewModel.listUserSubject
+        viewModel.getUserList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

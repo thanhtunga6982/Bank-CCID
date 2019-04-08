@@ -41,4 +41,7 @@ class ConditionBorrowMoney : BaseFragment() {
             replaceFragment(LendingMoneyFragment(), true)
         }
     }
+    override fun onBindViewModel() {
+    }
+
 }

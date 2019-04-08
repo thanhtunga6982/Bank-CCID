@@ -17,6 +17,8 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_borrow_money.*
 
 class BorrowMoneyFragment : BaseFragment() {
+
+
     companion object {
         private const val USER_CURRENT = "user_current"
 
@@ -44,6 +46,10 @@ class BorrowMoneyFragment : BaseFragment() {
         viewModel.getUserList()
         initListener()
         handleClick()
+    }
+
+    override fun onBindViewModel() {
+
     }
 
     private fun handleClick() {
@@ -79,7 +85,6 @@ class BorrowMoneyFragment : BaseFragment() {
             it.parseToInt().moneyFormat()?.also { value ->
                 viewModel.validateMoneyBorrow(value)
                 tvMoney.text = value
-
             }
         }
 
