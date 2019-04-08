@@ -45,6 +45,7 @@
                     android:hint="Email"
                     android:textSize="16dp"
                     android:background="@null"
+                    android:maxLines="1"
                     android:cursorVisible="false"
                     android:paddingLeft="10dp"
                     android:layout_height="wrap_content"
@@ -86,6 +87,7 @@
                     android:hint="Password"
                     android:background="@null"
                     android:paddingLeft="10dp"
+                    android:maxLines="1"
                     android:textSize="16dp"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>

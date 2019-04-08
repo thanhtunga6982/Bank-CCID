@@ -45,7 +45,10 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
         when (view) {
             edtName -> {
                 if (motionEvent.action == MotionEvent.ACTION_UP) {
-                    edtName.requestFocus()
+                    edtName.apply {
+                        requestFocus()
+                        isCursorVisible= true
+                    }
                     imgEmail.isSelected = true
                     line01.isSelected = true
                     imgPassword.isSelected = false
