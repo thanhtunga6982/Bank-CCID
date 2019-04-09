@@ -19,7 +19,6 @@ class LocalRepository() : RemoteDataSouce {
                     }
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val newsList = User().fromDataSnapshottoList(snapshot)
-                        println("TTTTTnewList$newsList")
                         it.onSuccess(newsList)
                     }
                 })

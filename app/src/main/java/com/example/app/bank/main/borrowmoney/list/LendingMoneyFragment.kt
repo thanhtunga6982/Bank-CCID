@@ -33,6 +33,9 @@ class LendingMoneyFragment() : BaseFragment() {
         super.onResume()
         initList()
     }
+    override fun onBindViewModel() {
+    }
+
 
     @SuppressLint("CheckResult")
     private fun initList() {
