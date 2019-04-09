@@ -18,7 +18,7 @@ class ConditionBorrowMoney : BaseFragment() {
         fun newInstance(user: User): ConditionBorrowMoney {
             return ConditionBorrowMoney().apply {
                 arguments = Bundle().apply {
-                    putSerializable(USER_CURRENT, user)
+                    putParcelable(USER_CURRENT, user)
                 }
             }
         }
@@ -27,7 +27,7 @@ class ConditionBorrowMoney : BaseFragment() {
     private var user = User()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         arguments?.let {
-            user = it.getSerializable(USER_CURRENT) as User
+            user = it.getParcelable(USER_CURRENT)
         }
         return inflater.inflate(R.layout.fragment_condition_borrow_money, container, false)
     }
