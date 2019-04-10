@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.extention.afterTextChanged
@@ -37,7 +38,7 @@ class BorrowMoneyFragment : BaseFragment() {
         arguments?.let {
             viewModel.name = it.getString(USER_CURRENT)
         }
-        return inflater.inflate(com.example.app.bank.R.layout.fragment_borrow_money, container, false)
+        return inflater.inflate(R.layout.fragment_borrow_money, container, false)
     }
 
     @SuppressLint("CheckResult")
@@ -53,14 +54,9 @@ class BorrowMoneyFragment : BaseFragment() {
     }
 
     private fun handleClick() {
-        btnOK.setOnClickListener { view ->
-            viewModel.listUserSubject
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewModel.handleUpdateUser(it)
-                    replaceFragment(LendingMoneyFragment(), true)
-                }, {})
+        btnOK.setOnClickListener {
+            viewModel.handleUpdateUser(viewModel.listUser)
+            replaceFragment(LendingMoneyFragment(), true)
         }
     }
 

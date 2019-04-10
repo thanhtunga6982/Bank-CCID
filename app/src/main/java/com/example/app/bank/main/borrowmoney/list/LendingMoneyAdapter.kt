@@ -10,6 +10,8 @@ import kotlinx.android.synthetic.main.item_lending_money.view.*
 
 class LendingMoneyAdapter(val listUser: MutableList<User>) :
     RecyclerView.Adapter<LendingMoneyAdapter.LendingMoneyViewHolder>() {
+
+    internal var userClickListeners: (user: User) -> Unit = {}
     override fun onCreateViewHolder(container: ViewGroup, p1: Int): LendingMoneyAdapter.LendingMoneyViewHolder {
         return LendingMoneyViewHolder(container.inflate(R.layout.item_lending_money, false))
     }
@@ -26,6 +28,9 @@ class LendingMoneyAdapter(val listUser: MutableList<User>) :
         fun bindView(user: User) {
             user.run {
                 itemView.apply {
+                    setOnClickListener {
+                        userClickListeners(listUser[adapterPosition])
+                    }
                     tvEmail.text = email
                     tvName.text = name
                     tvMoneyBorrow.text = moneyBorrow

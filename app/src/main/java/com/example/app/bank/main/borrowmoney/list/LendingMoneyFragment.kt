@@ -20,35 +20,43 @@ class LendingMoneyFragment() : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = LendingMoneyViewModel(LocalRepository())
-        viewModel.getUserList()
         return inflater.inflate(R.layout.lending_money_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initAdapter()
+        initClick()
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun initAdapter() {
+        adapter = LendingMoneyAdapter(viewModel.listUser)
+        recyclerViewLIst.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@LendingMoneyFragment.adapter
+            itemAnimator = null
+            this@LendingMoneyFragment.adapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun initClick() {
+        adapter.userClickListeners = {
+            println("TTTTT$it")
+        //TODO Detail
+        }
+    }
+
+    override fun onBindViewModel() {
         initList()
     }
-    override fun onBindViewModel() {
-    }
-
 
     @SuppressLint("CheckResult")
     private fun initList() {
-        viewModel.listUserSubject
+        viewModel.getUserLending()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                adapter = LendingMoneyAdapter(it)
-                recyclerViewLIst.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = this@LendingMoneyFragment.adapter
-                    itemAnimator = null
-                }
+                adapter.notifyDataSetChanged()
             }, {})
     }
 }

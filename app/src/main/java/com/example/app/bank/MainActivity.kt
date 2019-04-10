@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.example.app.bank.base.BaseActivity
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.main.borrowmoney.borrow.ConditionBorrowMoney
+import com.example.app.bank.main.borrowmoney.list.LendingMoneyFragment
 import com.example.app.bank.main.login.MainBankContainer
 
 class MainActivity : BaseActivity() {
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity() {
                 val fragment = it.getChildFragment()
                 when (fragment) {
                     is ConditionBorrowMoney -> return
+
                     else -> {
                         (fragment as BaseFragment).popBackStack()
                     }

@@ -53,7 +53,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                     else {
                         progressBar.gone()
                     }
-                },{})
+                }, {})
         )
     }
 
@@ -64,7 +64,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                 if (motionEvent.action == MotionEvent.ACTION_UP) {
                     edtName.apply {
                         requestFocus()
-                        isCursorVisible= true
+                        isCursorVisible = true
                     }
                     imgEmail.isSelected = true
                     line01.isSelected = true
@@ -134,20 +134,21 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                         val usersRef = firebase.child("listUser")
                         auth.uid?.let { uid ->
                             userUpdates["${it[i].key}/id"] = uid
+                            //getUser position
+                            it[i].run {
+                                val user = User(
+                                    id = uid,
+                                    key = key,
+                                    name = name,
+                                    moneyBorrow = moneyBorrow,
+                                    debtpaymentplan = debtpaymentplan,
+                                    assettax = assettax,
+                                    totalasset = totalasset
+                                )
+                                replaceFragment(ConditionBorrowMoney.newInstance(user), true)
+                            }
                         }
-                        //getUser position
-                        it[i].run {
-                            val user = User(
-                                id = auth.uid,
-                                key = key,
-                                name = name,
-                                moneyBorrow = moneyBorrow,
-                                debtpaymentplan = debtpaymentplan,
-                                assettax = assettax,
-                                totalasset = totalasset
-                            )
-                            replaceFragment(ConditionBorrowMoney.newInstance(user), true)
-                        }
+
                         usersRef.updateChildren(userUpdates as Map<String, Any>)
                     }
                 }

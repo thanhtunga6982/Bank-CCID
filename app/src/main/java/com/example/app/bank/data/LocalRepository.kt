@@ -24,4 +24,20 @@ class LocalRepository() : RemoteDataSouce {
                 })
         }
     }
+
+    override fun getUserLending(): Single<MutableList<User>> {
+        return Single.create<MutableList<User>> {
+            FirebaseDatabase.getInstance().reference
+                .child("listLending")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        it.onError(error.toException())
+                    }
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val newsList = User().fromDataSnapshottoList(snapshot)
+                        it.onSuccess(newsList)
+                    }
+                })
+        }
+    }
 }

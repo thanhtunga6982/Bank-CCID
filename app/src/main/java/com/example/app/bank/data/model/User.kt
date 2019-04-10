@@ -8,9 +8,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class User(
-    @Exclude
     var key: String = "",
-    @SerializedName("id")  var id: String? = "",
+    @SerializedName("id")  var id: String = "",
     @SerializedName("name")  var name: String = "",
     @SerializedName("email") var email: String = "",
     @SerializedName("moneyBorrow") var moneyBorrow: String = "",
