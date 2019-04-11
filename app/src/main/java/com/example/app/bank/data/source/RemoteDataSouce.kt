@@ -7,4 +7,7 @@ interface RemoteDataSouce {
 
     fun getUser(): Single<MutableList<User>>
 
+
+    fun getUserLending(): Single<MutableList<User>>
+
 }

@@ -9,12 +9,11 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
 class BorrowMoneyViewModel(var localRepository: LocalRepository) {
-    var listUser = mutableListOf<User>()
     var name = ""
-    var user = User()
-    internal val listUserSubject = BehaviorSubject.create<MutableList<User>>()
+    var userbank = User()
+    var listUser = mutableListOf(userbank)
     internal val stateButtonSubject = BehaviorSubject.create<Boolean>()
-    private var firebase = FirebaseDatabase.getInstance().reference
+    private var firebase = FirebaseDatabase.getInstance().reference.child("listLending")
 
     init {
         stateButtonSubject.onNext(false)
@@ -26,50 +25,56 @@ class BorrowMoneyViewModel(var localRepository: LocalRepository) {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                listUser.clear()
-                listUser.addAll(it)
-                listUserSubject.onNext(listUser)
+                // map user to add
+                it.mapIndexed { index, users ->
+                    if (it[index].name == name) {
+                        userbank.name = users.name
+                        userbank.email = users.email
+                        userbank.id = users.id
+                    }
+                }
             }, {})
     }
 
     fun validateMoneyBorrow(text: String) {
-        user.moneyBorrow = text
+        userbank.moneyBorrow = text
         validateForm()
     }
 
     fun validateMoneyAssetTax(text: String) {
-        user.assettax = text
+        userbank.assettax = text
         validateForm()
     }
 
     fun validateMoneyDebtpaymentplan(text: String) {
-        user.debtpaymentplan = text
+        userbank.debtpaymentplan = text
         validateForm()
     }
 
     private fun validateForm() {
-        stateButtonSubject.onNext(user.moneyBorrow.isNotBlank() && user.assettax.isNotBlank() && user.debtpaymentplan.isNotBlank())
+        stateButtonSubject.onNext(userbank.moneyBorrow.isNotBlank() && userbank.assettax.isNotBlank() && userbank.debtpaymentplan.isNotBlank())
     }
 
     internal fun handleUpdateUser(list: MutableList<User>) {
         for (i in 0 until list.size) {
             if (list[i].name == name) {
-                val userUpdates = HashMap<String, String>()
-                val usersRef = firebase.child("listUser")
+                val id = firebase.push().key
                 //getUser position
                 list[i].run {
                     val user = User(
-                        moneyBorrow = user.moneyBorrow,
-                        debtpaymentplan = user.debtpaymentplan,
-                        assettax = user.assettax
+                        key = userbank.key,
+                        id = userbank.id,
+                        name = userbank.name,
+                        email = userbank.email,
+                        moneyBorrow = userbank.moneyBorrow,
+                        debtpaymentplan = userbank.debtpaymentplan,
+                        assettax = userbank.assettax,
+                        totalasset = userbank.totalasset
                     )
-                    userUpdates["${list[i].key}/moneyborrow"] = user.moneyBorrow
-                    userUpdates["${list[i].key}/debtpaymentplan"] = user.debtpaymentplan
-                    userUpdates["${list[i].key}/assettax"] = user.assettax
+                    firebase.child(id.toString()).setValue(user)
                 }
-                usersRef.updateChildren(userUpdates as Map<String, Any>)
             }
         }
-    }
 
+    }
 }
