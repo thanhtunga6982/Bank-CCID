@@ -10,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 data class User(
     var key: String = "",
     @SerializedName("id")  var id: String = "",
+    @SerializedName("avatar")  var avatar: String = "",
     @SerializedName("name")  var name: String = "",
     @SerializedName("email") var email: String = "",
     @SerializedName("moneyBorrow") var moneyBorrow: String = "",

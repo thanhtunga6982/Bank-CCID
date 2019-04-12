@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
+import com.example.app.bank.main.detailUser.DetailUserFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.lending_money_fragment.*
@@ -41,8 +42,7 @@ class LendingMoneyFragment() : BaseFragment() {
 
     private fun initClick() {
         adapter.userClickListeners = {
-            println("TTTTT$it")
-        //TODO Detail
+            replaceFragment(DetailUserFragment.newInstance(it), true)
         }
     }
 

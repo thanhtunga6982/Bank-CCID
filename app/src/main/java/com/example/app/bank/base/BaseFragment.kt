@@ -1,7 +1,7 @@
 package com.example.app.bank.base
 
 import android.support.v4.app.Fragment
-import com.example.app.bank.extention.popBackStack
+import android.support.v4.app.FragmentManager
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -20,6 +20,17 @@ abstract class BaseFragment() : Fragment() {
         parentFragment?.let {
             if (it is BaseFragmentContainer) {
                 it.childFragmentManager.popBackStack()
+            }
+        }
+    }
+
+    fun popBackStackTagName(tagNameBackStack: String? = null) {
+        parentFragment?.let {
+            if (it is BaseFragmentContainer) {
+                it.childFragmentManager.popBackStackImmediate(
+                    tagNameBackStack,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
             }
         }
     }
