@@ -58,7 +58,7 @@ class ConditionBorrowMoney : BaseFragment() {
                 .subscribe({
                     if (it) {
                         progressBar.gone()
-                        this@ConditionBorrowMoney.popBackStack()
+                        this@ConditionBorrowMoney.popBackStackTagName(AppConstant.TAG_NAME_LOGIN)
                     } else {
                         progressBar.visible()
                     }

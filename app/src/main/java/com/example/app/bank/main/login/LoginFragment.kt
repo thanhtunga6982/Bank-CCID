@@ -44,18 +44,18 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
     }
 
     override fun onBindViewModel() {
-        addDisposables(
-            viewModel.loadingSubject
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it)
-                        progressBar.visible()
-                    else {
-                        progressBar.gone()
-                    }
-                }, {})
-        )
+//        addDisposables(
+//            viewModel.loadingSubject
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                   .subscribe({
+//                    if (it)
+//                        containerProgressbar.visible()
+//                    else {
+//                        containerProgressbar.gone()
+//                    }
+//                }, {})
+//        )
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -110,6 +110,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
 
     private fun signInWithEmailAndPassword(email: String, passWord: String) {
         context?.let { ctx ->
+            containerProgressbar.visible()
             auth.signInWithEmailAndPassword(email, passWord)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -129,7 +130,6 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                println("TTTTT$it")
                 for (i in 0 until it.size) {
                     if (it[i].email == email) {
                         val userUpdates = HashMap<String, String>()
@@ -153,6 +153,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                         }
                         usersRef.updateChildren(userUpdates as Map<String, Any>)
                     }
+                    containerProgressbar.gone()
                 }
             }, {})
     }

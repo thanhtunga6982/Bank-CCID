@@ -11,7 +11,6 @@ import io.reactivex.subjects.BehaviorSubject
 
 class LoginFragmentViewModel(var localRepository: LocalRepository) {
     private var listUser = mutableListOf<User>()
-    internal val listUserSubject = BehaviorSubject.create<MutableList<User>>()
     var user = User()
     internal var loadingSubject = BehaviorSubject.create<Boolean>()
 
