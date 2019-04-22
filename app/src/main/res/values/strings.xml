@@ -3,4 +3,6 @@
     <string name="tv_header_login">ConnectDeal</string>
     <string name="tv_check_connect_internet">Please check connect internet</string>
     <string name="tv_check_form_login">Please check name or password</string>
+    <string name="tv_list_need_borrow_money">Danh sách những người cần vay tiền</string>
+    <string name="tv_address_map_dtu">\"Duy Tan University, Nguyễn Văn Linh, Thanh Khê, Đà Nẵng, Vietnam\"</string>
 </resources>

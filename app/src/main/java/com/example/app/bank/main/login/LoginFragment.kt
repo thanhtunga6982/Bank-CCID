@@ -44,18 +44,18 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
     }
 
     override fun onBindViewModel() {
-//        addDisposables(
-//            viewModel.loadingSubject
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                   .subscribe({
-//                    if (it)
-//                        containerProgressbar.visible()
-//                    else {
-//                        containerProgressbar.gone()
-//                    }
-//                }, {})
-//        )
+        addDisposables(
+            viewModel.loadingSubject
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it)
+                        containerProgressbar.visible()
+                    else {
+                        containerProgressbar.gone()
+                    }
+                }, {})
+        )
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -121,6 +121,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                         }
                     }
                 }
+
         }
     }
 
@@ -130,6 +131,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+
                 for (i in 0 until it.size) {
                     if (it[i].email == email) {
                         val userUpdates = HashMap<String, String>()
@@ -148,12 +150,15 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                                     assettax = assettax,
                                     totalasset = totalasset
                                 )
-                                replaceFragment(ConditionBorrowMoney.newInstance(user), true, AppConstant.TAG_NAME_LOGIN)
+                                replaceFragment(
+                                    ConditionBorrowMoney.newInstance(user),
+                                    true,
+                                    AppConstant.TAG_NAME_LOGIN
+                                )
                             }
                         }
                         usersRef.updateChildren(userUpdates as Map<String, Any>)
                     }
-                    containerProgressbar.gone()
                 }
             }, {})
     }

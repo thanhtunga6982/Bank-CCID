@@ -12,6 +12,8 @@ class BorrowMoneyViewModel(var localRepository: LocalRepository) {
     var name = ""
     var userbank = User()
     var listUser = mutableListOf(userbank)
+
+    var user = User()
     internal val stateButtonSubject = BehaviorSubject.create<Boolean>()
     private var firebase = FirebaseDatabase.getInstance().reference.child("listLending")
 
@@ -27,32 +29,33 @@ class BorrowMoneyViewModel(var localRepository: LocalRepository) {
             .subscribe({
                 // map user to add
                 it.mapIndexed { index, users ->
-                    if (it[index].name == name) {
+                    if (it[index].name == userbank.name) {
                         userbank.name = users.name
                         userbank.email = users.email
                         userbank.id = users.id
+                        userbank.totalasset = users.totalasset
                     }
                 }
             }, {})
     }
 
     fun validateMoneyBorrow(text: String) {
-        userbank.moneyBorrow = text
+        user.moneyBorrow = text
         validateForm()
     }
 
     fun validateMoneyAssetTax(text: String) {
-        userbank.assettax = text
+        user.assettax = text
         validateForm()
     }
 
     fun validateMoneyDebtpaymentplan(text: String) {
-        userbank.debtpaymentplan = text
+        user.debtpaymentplan = text
         validateForm()
     }
 
     private fun validateForm() {
-        stateButtonSubject.onNext(userbank.moneyBorrow.isNotBlank() && userbank.assettax.isNotBlank() && userbank.debtpaymentplan.isNotBlank())
+        stateButtonSubject.onNext(user.moneyBorrow.isNotBlank() && user.assettax.isNotBlank() && user.debtpaymentplan.isNotBlank())
     }
 
     internal fun handleUpdateUser(list: MutableList<User>) {
@@ -66,9 +69,9 @@ class BorrowMoneyViewModel(var localRepository: LocalRepository) {
                         id = userbank.id,
                         name = userbank.name,
                         email = userbank.email,
-                        moneyBorrow = userbank.moneyBorrow,
-                        debtpaymentplan = userbank.debtpaymentplan,
-                        assettax = userbank.assettax,
+                        moneyBorrow = user.moneyBorrow,
+                        debtpaymentplan = user.debtpaymentplan,
+                        assettax = user.assettax,
                         totalasset = userbank.totalasset
                     )
                     firebase.child(id.toString()).setValue(user)

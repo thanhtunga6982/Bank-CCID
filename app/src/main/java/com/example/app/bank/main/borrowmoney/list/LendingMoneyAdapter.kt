@@ -7,6 +7,7 @@ import com.example.app.bank.R
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.inflate
 import kotlinx.android.synthetic.main.item_lending_money.view.*
+import kotlinx.android.synthetic.main.layout_detail_user.view.*
 
 class LendingMoneyAdapter(val listUser: MutableList<User>) :
     RecyclerView.Adapter<LendingMoneyAdapter.LendingMoneyViewHolder>() {

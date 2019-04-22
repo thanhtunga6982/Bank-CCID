@@ -1,6 +1,5 @@
 package com.example.app.bank.main.borrowmoney.list
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -8,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
+import com.example.app.bank.base.BaseFragmentContainer
 import com.example.app.bank.data.LocalRepository
+import com.example.app.bank.extention.gone
+import com.example.app.bank.extention.visible
 import com.example.app.bank.main.detailUser.DetailUserFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.layout_header_app.*
 import kotlinx.android.synthetic.main.lending_money_fragment.*
 
 class LendingMoneyFragment() : BaseFragment() {
@@ -44,19 +47,37 @@ class LendingMoneyFragment() : BaseFragment() {
         adapter.userClickListeners = {
             replaceFragment(DetailUserFragment.newInstance(it), true)
         }
+        imgClose.setOnClickListener {
+            parentFragment?.let {
+                if (it is BaseFragmentContainer) {
+                    popBackStack()
+                }
+            }
+        }
+        tvTitleHeader.text = context?.getString(R.string.tv_list_need_borrow_money)
     }
 
     override fun onBindViewModel() {
-        initList()
+        addDisposables(
+            viewModel.loadingSubject
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it) {
+                        containerProgressbar.visible()
+                    } else {
+                        containerProgressbar.gone()
+
+                    }
+                }, {}),
+            viewModel.getUserLending()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    adapter.notifyDataSetChanged()
+                }, {})
+
+        )
     }
 
-    @SuppressLint("CheckResult")
-    private fun initList() {
-        viewModel.getUserLending()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                adapter.notifyDataSetChanged()
-            }, {})
-    }
 }

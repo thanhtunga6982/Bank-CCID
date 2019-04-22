@@ -2,36 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:paddingStart="10dp"
-              android:paddingEnd="10dp">
+              android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
 
-        <TextView
-                android:id="@+id/tvHeaderTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="43dp"
-                android:textSize="17dp"
-                android:layout_marginBottom="8dp"
-                android:text="Thông tin người cần vay"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"
-                tools:visibility="visible"/>
 
-        <View
-                android:id="@+id/viewMiddleHeaderTitle"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="8.5dp"
-                android:background="@color/colorGray"
-                tools:visibility="visible"/>
+    <include layout="@layout/layout_header_app"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
         <TextView
                 android:id="@+id/tvNameTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="30dp"
                 android:text="Name"
                 android:textColor="@color/colorGray"
                 tools:text="Name"/>
@@ -176,6 +164,5 @@
                 android:layout_marginBottom="13dp"
                 android:lineSpacingExtra="4dp"
                 tools:text="2,000,000"/>
-
-
+    </LinearLayout>
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.example.app.bank.main.condition
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import com.example.app.bank.main.borrowmoney.list.LendingMoneyFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_condition_borrow_money.*
+import kotlinx.android.synthetic.main.fragment_condition_borrow_money.view.*
 import kotlinx.android.synthetic.main.item_layout_function.*
 
 class ConditionBorrowMoney : BaseFragment() {
@@ -46,7 +49,7 @@ class ConditionBorrowMoney : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnVaytien.setOnClickListener {
-            replaceFragment(BorrowMoneyFragment.newInstance(user.name), true, AppConstant.TAG_NAME_BORROW_MONEY)
+            replaceFragment(BorrowMoneyFragment.newInstance(user), true, AppConstant.TAG_NAME_BORROW_MONEY)
         }
         btnChoVaytien.setOnClickListener {
             replaceFragment(LendingMoneyFragment(), true, AppConstant.TAG_NAME_BORROW_MONEY)
@@ -63,6 +66,11 @@ class ConditionBorrowMoney : BaseFragment() {
                         progressBar.visible()
                     }
                 }) {}
+        }
+        btnHelp.setOnClickListener {
+            val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:16.0132979,108.2199589,15z?q=${context?.getString(R.string.tv_address_map_dtu)}"))
+            mapIntent.`package` = "com.google.android.apps.maps"
+            startActivity(mapIntent)
         }
         imgCircleAvatar.loadUrl(user.avatar)
         tvNameHeader.text = user.name
