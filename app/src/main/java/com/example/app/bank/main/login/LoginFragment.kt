@@ -7,13 +7,14 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import com.example.app.bank.AppConstant
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.visible
-import com.example.app.bank.main.borrowmoney.borrow.ConditionBorrowMoney
+import com.example.app.bank.main.condition.ConditionBorrowMoney
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +32,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
         viewModel = LoginFragmentViewModel(LocalRepository())
         auth = FirebaseAuth.getInstance()
 
-        return inflater.inflate(com.example.app.bank.R.layout.fragment_login_app, container, false)
+        return inflater.inflate(R.layout.fragment_login_app, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,9 +50,9 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (it)
-                        progressBar.visible()
+                        containerProgressbar.visible()
                     else {
-                        progressBar.gone()
+                        containerProgressbar.gone()
                     }
                 }, {})
         )
@@ -109,6 +110,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
 
     private fun signInWithEmailAndPassword(email: String, passWord: String) {
         context?.let { ctx ->
+            containerProgressbar.visible()
             auth.signInWithEmailAndPassword(email, passWord)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -119,6 +121,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                         }
                     }
                 }
+
         }
     }
 
@@ -128,6 +131,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+
                 for (i in 0 until it.size) {
                     if (it[i].email == email) {
                         val userUpdates = HashMap<String, String>()
@@ -140,15 +144,19 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                                     id = uid,
                                     key = key,
                                     name = name,
+                                    avatar = avatar,
                                     moneyBorrow = moneyBorrow,
                                     debtpaymentplan = debtpaymentplan,
                                     assettax = assettax,
                                     totalasset = totalasset
                                 )
-                                replaceFragment(ConditionBorrowMoney.newInstance(user), true)
+                                replaceFragment(
+                                    ConditionBorrowMoney.newInstance(user),
+                                    true,
+                                    AppConstant.TAG_NAME_LOGIN
+                                )
                             }
                         }
-
                         usersRef.updateChildren(userUpdates as Map<String, Any>)
                     }
                 }

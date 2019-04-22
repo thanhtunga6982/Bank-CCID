@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
+import com.example.app.bank.base.BaseFragmentContainer
 import com.example.app.bank.data.LocalRepository
-import com.example.app.bank.extention.afterTextChanged
-import com.example.app.bank.extention.moneyFormat
-import com.example.app.bank.extention.parseToInt
-import com.example.app.bank.extention.showKeyboard
+import com.example.app.bank.data.model.User
+import com.example.app.bank.extention.*
 import com.example.app.bank.main.borrowmoney.list.LendingMoneyFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_borrow_money.*
+import kotlinx.android.synthetic.main.layout_header_app.*
 
 class BorrowMoneyFragment : BaseFragment() {
 
@@ -23,10 +23,10 @@ class BorrowMoneyFragment : BaseFragment() {
     companion object {
         private const val USER_CURRENT = "user_current"
 
-        fun newInstance(name: String): BorrowMoneyFragment {
+        fun newInstance(user: User): BorrowMoneyFragment {
             return BorrowMoneyFragment().apply {
                 arguments = Bundle().apply {
-                    putString(USER_CURRENT, name)
+                    putParcelable(USER_CURRENT, user)
                 }
             }
         }
@@ -36,7 +36,7 @@ class BorrowMoneyFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = BorrowMoneyViewModel(LocalRepository())
         arguments?.let {
-            viewModel.name = it.getString(USER_CURRENT)
+            viewModel.userbank = it.getParcelable(USER_CURRENT)
         }
         return inflater.inflate(R.layout.fragment_borrow_money, container, false)
     }
@@ -50,7 +50,7 @@ class BorrowMoneyFragment : BaseFragment() {
     }
 
     override fun onBindViewModel() {
-
+        //TODO
     }
 
     private fun handleClick() {
@@ -58,6 +58,14 @@ class BorrowMoneyFragment : BaseFragment() {
             viewModel.handleUpdateUser(viewModel.listUser)
             replaceFragment(LendingMoneyFragment(), true)
         }
+        imgClose.setOnClickListener {
+            parentFragment?.let {
+                if (it is BaseFragmentContainer) {
+                    popBackStack()
+                }
+            }
+        }
+        tvTitleHeader.text = "Thong tin vay tien"
     }
 
     override fun onResume() {
@@ -80,7 +88,11 @@ class BorrowMoneyFragment : BaseFragment() {
         edtMoneyBorrow.afterTextChanged {
             it.parseToInt().moneyFormat()?.also { value ->
                 viewModel.validateMoneyBorrow(value)
-                tvMoney.text = value
+                if (value == "0") {
+                    tvMoney.text = ""
+                } else {
+                    tvMoney.text = value
+                }
             }
         }
 
@@ -97,5 +109,11 @@ class BorrowMoneyFragment : BaseFragment() {
         edtPlan.afterTextChanged {
             viewModel.validateMoneyDebtpaymentplan(it)
         }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        edtMoneyBorrow.hideKeyboard()
     }
 }

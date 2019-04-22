@@ -20,3 +20,8 @@ fun View.showKeyboard() {
     requestFocus()
     imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
+
+fun View.hideKeyboard(): Boolean {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    return imm.hideSoftInputFromWindow(windowToken, 0)
+}

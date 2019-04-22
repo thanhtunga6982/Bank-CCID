@@ -17,7 +17,6 @@
                 android:layout_height="60dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/reus"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -54,4 +53,15 @@
             tools:ignore="NotSibling">
         <include layout="@layout/item_layout_function"/>
     </ScrollView>
+    <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:clickable="false"
+            android:focusable="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

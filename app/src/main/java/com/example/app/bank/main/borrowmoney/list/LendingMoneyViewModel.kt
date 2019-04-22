@@ -10,12 +10,19 @@ import io.reactivex.subjects.BehaviorSubject
 
 class LendingMoneyViewModel(var localRepository: LocalRepository) {
     var listUser = mutableListOf<User>()
+    internal var loadingSubject = BehaviorSubject.create<Boolean>()
 
     @SuppressLint("CheckResult")
     fun getUserLending(): Single<MutableList<User>> =
         localRepository.getUserLending()
             .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                loadingSubject.onNext(true)
+            }
             .doOnSuccess {
                 listUser.addAll(it)
+            }
+            .doFinally {
+                loadingSubject.onNext(false)
             }
 }
