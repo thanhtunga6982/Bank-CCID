@@ -148,8 +148,12 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                                     moneyBorrow = moneyBorrow,
                                     debtpaymentplan = debtpaymentplan,
                                     assettax = assettax,
-                                    totalasset = totalasset
-                                )
+                                    totalasset = totalasset,
+                                    address =  address,
+                                    sex = sex,
+                                    email = email,
+                                    phone = phone,
+                                    cmnd = cmnd)
                                 replaceFragment(
                                     ConditionBorrowMoney.newInstance(user),
                                     true,

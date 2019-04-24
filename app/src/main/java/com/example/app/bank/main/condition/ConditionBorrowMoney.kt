@@ -15,6 +15,7 @@ import com.example.app.bank.extention.loadUrl
 import com.example.app.bank.extention.visible
 import com.example.app.bank.main.borrowmoney.borrow.BorrowMoneyFragment
 import com.example.app.bank.main.borrowmoney.list.LendingMoneyFragment
+import com.example.app.bank.main.profile.ProfileBankFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_condition_borrow_money.*
@@ -71,6 +72,9 @@ class ConditionBorrowMoney : BaseFragment() {
             val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:16.0132979,108.2199589,15z?q=${context?.getString(R.string.tv_address_map_dtu)}"))
             mapIntent.`package` = "com.google.android.apps.maps"
             startActivity(mapIntent)
+        }
+        imgProfile.setOnClickListener {
+            replaceFragment(ProfileBankFragment.newInstance(user),true)
         }
         imgCircleAvatar.loadUrl(user.avatar)
         tvNameHeader.text = user.name

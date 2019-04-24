@@ -10,13 +10,17 @@ import kotlinx.android.parcel.Parcelize
 data class User(
     var key: String = "",
     @SerializedName("id")  var id: String = "",
+    @SerializedName("address")  var address: String = "",
     @SerializedName("avatar")  var avatar: String = "",
     @SerializedName("name")  var name: String = "",
     @SerializedName("email") var email: String = "",
     @SerializedName("moneyBorrow") var moneyBorrow: String = "",
     @SerializedName("debtpaymentplan") var debtpaymentplan: String = "",
     @SerializedName("assettax") var assettax: String = "",
-    @SerializedName("totalasset") var totalasset: String = ""
+    @SerializedName("totalasset") var totalasset: String = "",
+    @SerializedName("sex") var sex: String = "",
+    @SerializedName("phone") var phone: String = "",
+    @SerializedName("cmnd") var cmnd: String = ""
 
 ) : Parcelable {
     fun fromDataSnapshot(dataSnapshot: DataSnapshot): User? {
