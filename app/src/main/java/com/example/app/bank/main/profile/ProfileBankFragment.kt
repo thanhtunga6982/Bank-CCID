@@ -9,6 +9,9 @@ import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.base.BaseFragmentContainer
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.loadUrl
+import com.example.app.bank.main.profile.edit_profile.EditProfileBankFragment
+import com.example.app.bank.main.profile.edit_profile.EnumProfile
+import com.example.app.bank.main.profile.edit_profile.EnumProfileEdit
 import kotlinx.android.synthetic.main.fragment_profile_bank.*
 import kotlinx.android.synthetic.main.layout_header_profile.*
 
@@ -47,7 +50,12 @@ class ProfileBankFragment() : BaseFragment() {
             tvValuePhone.text = phone
             tvValueEmailProfile.text = email
             tvValueCmndProfile.text = cmnd
-            tvValueSexProfile.text = sex
+            tvValueAssetTaxProfile.text = assettax
+            if (sex == EnumProfileEdit.MALE.type) {
+                tvValueSexProfile.text = EnumProfile.MALE.type
+            } else {
+                tvValueSexProfile.text = EnumProfile.FEMALE.type
+            }
         }
     }
 
@@ -60,7 +68,7 @@ class ProfileBankFragment() : BaseFragment() {
             }
         }
         imgEditClose.setOnClickListener {
-            //TODO Handle event edit profile
+            replaceFragment(EditProfileBankFragment.newInstance(user), true)
         }
     }
 

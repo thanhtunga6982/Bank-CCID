@@ -19,6 +19,15 @@ open class BaseFragmentContainer() : Fragment() {
             if (isAddBackStack) {
                 addToBackStack(tagNameBackStack)
             }
+        }.commitAllowingStateLoss()
+    }
+
+    fun addFragment(fragment: Fragment, isAddBackStack: Boolean, tagNameBackStack: String? = null) {
+        childFragmentManager.beginTransaction().apply {
+            add(R.id.flBaseContainer, fragment, fragment.javaClass.simpleName)
+            if (isAddBackStack) {
+                addToBackStack(tagNameBackStack)
+            }
         }.commit()
     }
 

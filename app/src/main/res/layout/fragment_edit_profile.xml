@@ -14,22 +14,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-                android:id="@+id/imgClose"
+                android:id="@+id/imgCloseEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_close_16dp"
                 android:padding="20dp"/>
 
-        <ImageView
-                android:id="@+id/imgEditClose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/ic_edit_profile"
-                android:padding="20dp"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgCircleAvatar"
+                android:id="@+id/imgCircleAvatarEdit"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="20dp"
@@ -38,26 +31,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@drawable/img_error"/>
 
-        <TextView
-                android:id="@+id/tvNameProfile"
+        <EditText
+                android:id="@+id/edtNameProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:textSize="25dp"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="sans-serif-light"
-                app:layout_constraintTop_toBottomOf="@id/imgCircleAvatar"
+                app:layout_constraintTop_toBottomOf="@id/imgCircleAvatarEdit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Thanh Tung"/>
-        <TextView
-                android:id="@+id/tvAddressProfile"
+        <EditText
+                android:id="@+id/edtAddressProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="sans-serif-light"
-                app:layout_constraintTop_toBottomOf="@id/tvNameProfile"
+                app:layout_constraintTop_toBottomOf="@id/edtNameProfile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="KonTum, VietNam"/>
@@ -69,6 +61,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/viewHeader"
             layout="@layout/layout_header_profile"/>
+
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -88,16 +81,16 @@
                     android:text="Email"
                     android:textColor="@color/colorPrimary"
                     tools:ignore="MissingConstraints"/>
-            <TextView
-                    android:id="@+id/tvValueEmailProfile"
-                    android:layout_width="wrap_content"
+            <EditText
+                    android:id="@+id/edtValueEmailProfileEdit"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="17dp"
                     android:textColor="@color/colorBlack"
                     android:fontFamily="sans-serif-light"
                     tools:text="thanhtunga0000@gmai.com"
-                    tools:ignore="MissingConstraints"/>l
+                    tools:ignore="MissingConstraints"/>
             <!--CMND-->
             <TextView
                     android:id="@+id/tvCmndlProfile"
@@ -107,9 +100,9 @@
                     android:text="CMND"
                     android:textColor="@color/colorPrimary"
                     tools:ignore="MissingConstraints"/>
-            <TextView
-                    android:id="@+id/tvValueCmndProfile"
-                    android:layout_width="wrap_content"
+            <EditText
+                    android:id="@+id/edtValueCmndProfile"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="17dp"
@@ -127,9 +120,9 @@
                     android:text="Tài sản thuê chấp"
                     android:textColor="@color/colorPrimary"
                     tools:ignore="MissingConstraints"/>
-            <TextView
-                    android:id="@+id/tvValueAssetTaxProfile"
-                    android:layout_width="wrap_content"
+            <EditText
+                    android:id="@+id/edtValueAssetTaxProfile"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="17dp"
@@ -146,16 +139,36 @@
                     android:text="Giới tính "
                     android:textColor="@color/colorPrimary"
                     tools:ignore="MissingConstraints"/>
-            <TextView
-                    android:id="@+id/tvValueSexProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+
+            <RadioGroup
+                    android:id="@+id/rgpSex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <RadioButton
+                        android:id="@+id/rbnMale"
+                        android:text="Nam"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <RadioButton
+                        android:id="@+id/rbnFemale"
+                        android:text="Nữ"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RadioGroup>
+
+            <Button
+                    android:id="@+id/btnAgree"
+                    android:text="Apply"
+                    android:layout_marginBottom="40dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="17dp"
-                    android:textColor="@color/colorBlack"
-                    android:fontFamily="sans-serif-light"
-                    tools:text="Nam"
-                    tools:ignore="MissingConstraints"/>
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

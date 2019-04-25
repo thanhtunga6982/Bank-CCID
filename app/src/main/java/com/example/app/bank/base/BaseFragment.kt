@@ -16,6 +16,13 @@ abstract class BaseFragment() : Fragment() {
         }
     }
 
+    fun addFragment(fragment: Fragment, isAddBackStack: Boolean, tagNameBackStack: String? = null) {
+        parentFragment?.let {
+            if (it is BaseFragmentContainer) {
+                it.addFragment(fragment, isAddBackStack, tagNameBackStack)
+            }
+        }
+    }
     fun popBackStack() {
         parentFragment?.let {
             if (it is BaseFragmentContainer) {
