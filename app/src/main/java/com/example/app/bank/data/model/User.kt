@@ -2,17 +2,16 @@ package com.example.app.bank.data.model
 
 import android.os.Parcelable
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.Exclude
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class User(
     var key: String = "",
-    @SerializedName("id")  var id: String = "",
-    @SerializedName("address")  var address: String = "",
-    @SerializedName("avatar")  var avatar: String = "",
-    @SerializedName("name")  var name: String = "",
+    @SerializedName("id") var id: String = "",
+    @SerializedName("address") var address: String = "",
+    @SerializedName("avatar") var avatar: String = "",
+    @SerializedName("name") var name: String = "",
     @SerializedName("email") var email: String = "",
     @SerializedName("moneyBorrow") var moneyBorrow: String = "",
     @SerializedName("debtpaymentplan") var debtpaymentplan: String = "",
@@ -20,13 +19,16 @@ data class User(
     @SerializedName("totalasset") var totalasset: String = "",
     @SerializedName("sex") var sex: String = "",
     @SerializedName("phone") var phone: String = "",
-    @SerializedName("cmnd") var cmnd: String = ""
+    @SerializedName("cmnd") var cmnd: String = "",
+    @SerializedName("interest") var interest: String = "",
+    @SerializedName("timeBorrow") var timeBorrow: String = ""
 
 ) : Parcelable {
     fun fromDataSnapshot(dataSnapshot: DataSnapshot): User? {
         val user = dataSnapshot.getValue(User::class.java)
         user?.key = dataSnapshot.key.toString()
         return user
+
     }
 
     fun fromDataSnapshottoList(snapshot: DataSnapshot): MutableList<User> {

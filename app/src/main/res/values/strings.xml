@@ -5,4 +5,23 @@
     <string name="tv_check_form_login">Please check name or password</string>
     <string name="tv_list_need_borrow_money">Danh sách những người cần vay tiền</string>
     <string name="tv_address_map_dtu">\"Duy Tan University, Nguyễn Văn Linh, Thanh Khê, Đà Nẵng, Vietnam\"</string>
+
+    <string name="tv_login_header">Ứng dụng cho vay\nNgang Hàng P2P</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_title_invest">Số dư tài khoản</string>
+
+    <string-array name="detail_data_area">
+        <item>Đà Nẵng </item>
+        <item>Hồ Chí Minh</item>
+        <item>Hà Nội </item>
+    </string-array>
+
+    <string-array name="detail_data_assetTax">
+        <item>Nhà cửa </item>
+        <item>Sổ đỏ </item>
+        <item>Khác </item>
+    </string-array>
+
 </resources>

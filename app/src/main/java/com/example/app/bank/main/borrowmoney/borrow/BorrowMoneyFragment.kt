@@ -38,6 +38,7 @@ class BorrowMoneyFragment : BaseFragment() {
         arguments?.let {
             viewModel.userbank = it.getParcelable(USER_CURRENT)
         }
+
         return inflater.inflate(R.layout.fragment_borrow_money, container, false)
     }
 

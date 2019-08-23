@@ -45,7 +45,7 @@ class LendingMoneyFragment() : BaseFragment() {
 
     private fun initClick() {
         adapter.userClickListeners = {
-            replaceFragment(DetailUserFragment.newInstance(it), true)
+            replaceFragment(DetailUserFragment.newInstance(it,false), true)
         }
         imgClose.setOnClickListener {
             parentFragment?.let {

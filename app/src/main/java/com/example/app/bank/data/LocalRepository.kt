@@ -17,6 +17,7 @@ class LocalRepository() : RemoteDataSouce {
                     override fun onCancelled(error: DatabaseError) {
                         it.onError(error.toException())
                     }
+
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val newsList = User().fromDataSnapshottoList(snapshot)
                         it.onSuccess(newsList)
@@ -33,6 +34,7 @@ class LocalRepository() : RemoteDataSouce {
                     override fun onCancelled(error: DatabaseError) {
                         it.onError(error.toException())
                     }
+
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val newsList = User().fromDataSnapshottoList(snapshot)
                         it.onSuccess(newsList)

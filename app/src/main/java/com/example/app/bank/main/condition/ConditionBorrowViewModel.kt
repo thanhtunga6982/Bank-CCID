@@ -17,6 +17,5 @@ class ConditionBorrowViewModel() {
             .subscribe({
                 timerDelayProgressbar.onNext(true)
             }, {})
-
     }
 }

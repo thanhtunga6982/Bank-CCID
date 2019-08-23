@@ -19,7 +19,7 @@ abstract class BaseDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return object : Dialog(context) {
             override fun onBackPressed() {
-                //disable onBack dismiss dialog
+                //disable onBack dismiss com.example.app.bank.dialog
                 onBackPressCallback()
             }
 
