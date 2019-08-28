@@ -16,7 +16,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
@@ -33,6 +32,7 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login_app.tvCheckPassword
 import java.security.KeyStore
 import javax.crypto.KeyGenerator
+
 
 //KeyguardManager is Class that can be used to lock and unlock the keyguard.
 //FingerprintManager.CryptoObject?A wrapper class for the crypto objects supported by FingerprintManager.
@@ -51,7 +51,7 @@ class LoginDTUFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return inflater.inflate(com.example.app.bank.R.layout.fragment_login, container, false)
     }
 
     @SuppressLint("NewApi")
@@ -65,7 +65,7 @@ class LoginDTUFragment : BaseFragment() {
             keyStore = KeyStore.getInstance("AndroidKeyStore")
             keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
             viewModel =
-                LoginDTUViewModel(keyguardManager, fingerprintManager, keyStore, keyGenerator, LocalRepository())
+                LoginDTUViewModel(keyguardManager, fingerprintManager, keyStore, keyGenerator, LocalRepository(it))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 viewModel.checkFingerprint(it)
             }
@@ -77,6 +77,7 @@ class LoginDTUFragment : BaseFragment() {
         }
         FirebaseApp.initializeApp(context)
         auth = FirebaseAuth.getInstance()
+
     }
 
     private fun initView() {
@@ -128,6 +129,26 @@ class LoginDTUFragment : BaseFragment() {
             }
 
             signInWithEmailAndPassword(email, password)
+            testToken()
+
+        }
+    }
+
+    private fun testToken() {
+        val mUser = FirebaseAuth.getInstance().currentUser
+        mUser?.let {
+            it.getIdToken(true)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val idToken = task.result?.token
+                        idToken?.let {
+                            println("xxxxxO$it")
+                            viewModel.setToken(it)
+                        }
+                    } else {
+                        // Handle error -> task.getException();
+                    }
+                }
         }
     }
 
@@ -142,14 +163,14 @@ class LoginDTUFragment : BaseFragment() {
                         containerProgressbarLogin.gone()
                         if (!viewModel.isInternetAvailable(ctx)) {
                             containerProgressbarLogin.gone()
-                            tvCheckPassword.text = ctx.getString(R.string.tv_check_connect_internet)
+                            tvCheckPassword.text =
+                                ctx.getString(com.example.app.bank.R.string.tv_check_connect_internet)
                         }
                     }
                 }
 
         }
     }
-
 
     private fun handleCheckfingerPrintSuccess() {
         Handler().postDelayed({
@@ -191,9 +212,11 @@ class LoginDTUFragment : BaseFragment() {
                                     phone = phone,
                                     cmnd = cmnd,
                                     interest = interest,
-                                    timeBorrow = timeBorrow
+                                    timeBorrow = timeBorrow,
+                                    linkBank = linkBank
                                 )
                                 replaceFragment(HomeFragment.newInstance(user), true)
+                                LocalRepository(context).saveUser(user)
                             }
                         }
                         usersRef.updateChildren(userUpdates as Map<String, Any>)

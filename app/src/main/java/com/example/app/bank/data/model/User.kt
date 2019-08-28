@@ -3,11 +3,14 @@ package com.example.app.bank.data.model
 import android.os.Parcelable
 import com.google.firebase.database.DataSnapshot
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class User(
     var key: String = "",
+    var money: String = "",
     @SerializedName("id") var id: String = "",
     @SerializedName("address") var address: String = "",
     @SerializedName("avatar") var avatar: String = "",
@@ -21,11 +24,13 @@ data class User(
     @SerializedName("phone") var phone: String = "",
     @SerializedName("cmnd") var cmnd: String = "",
     @SerializedName("interest") var interest: String = "",
-    @SerializedName("timeBorrow") var timeBorrow: String = ""
+    @SerializedName("timeBorrow") var timeBorrow: String = "",
+    @SerializedName("linkbank")var linkBank: MutableList<Bank>? = mutableListOf()
 
 ) : Parcelable {
     fun fromDataSnapshot(dataSnapshot: DataSnapshot): User? {
         val user = dataSnapshot.getValue(User::class.java)
+        user?.linkBank = Bank().fromDataSnapshottoList(dataSnapshot.child("linkbank"))
         user?.key = dataSnapshot.key.toString()
         return user
 

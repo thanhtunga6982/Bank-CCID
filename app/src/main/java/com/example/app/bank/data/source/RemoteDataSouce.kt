@@ -10,4 +10,5 @@ interface RemoteDataSouce {
 
     fun getUserLending(): Single<MutableList<User>>
 
+
 }

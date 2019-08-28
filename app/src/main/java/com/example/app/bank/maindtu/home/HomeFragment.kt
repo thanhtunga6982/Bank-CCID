@@ -13,6 +13,7 @@ import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.visible
+import com.example.app.bank.main.borrowmoney.list.LendingMoneyViewModel
 import com.example.app.bank.main.detailUser.DetailUserFragment
 import com.example.app.bank.maindtu.borrow.BorrowMoneyDTUFragment
 import com.example.app.bank.maindtu.dautu.InvestFragment
@@ -44,7 +45,9 @@ class HomeFragment : BaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = HomeViewModel(LocalRepository())
+        context?.let {
+            viewModel = HomeViewModel(LocalRepository(it))
+        }
         arguments?.let {
             user = it.getParcelable(USER_CURRENT_DTU)
         }

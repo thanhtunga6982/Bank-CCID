@@ -15,6 +15,7 @@ import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.visible
 import com.example.app.bank.main.condition.ConditionBorrowMoney
+import com.example.app.bank.maindtu.dautu.sangiaodich.SGDViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,7 +30,9 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
     private var firebase = FirebaseDatabase.getInstance().reference
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = LoginFragmentViewModel(LocalRepository())
+        context?.let {
+            viewModel = LoginFragmentViewModel(LocalRepository(it))
+        }
         auth = FirebaseAuth.getInstance()
 
         return inflater.inflate(R.layout.fragment_login_app, container, false)

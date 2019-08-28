@@ -46,7 +46,7 @@ class LoginDTUViewModel(
             listUser.clear()
             listUser.addAll(it)
             listUserSubject.onNext(listUser)
-            println("xxxxx$it")
+            println("xxxxxListUser$it")
         }
         .doOnSubscribe {
             loadingSubject.onNext(true)
@@ -106,6 +106,13 @@ class LoginDTUViewModel(
         return true
     }
 
+//    fun getToken(){
+//        localRepository.getToken()
+//    }
+
+    fun setToken(token: String){
+        localRepository.setToken(token)
+    }
 
     fun isInternetAvailable(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?

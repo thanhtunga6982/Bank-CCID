@@ -23,7 +23,9 @@ class SGDFragment : BaseFragment() {
     private lateinit var viewModel: SGDViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = SGDViewModel(LocalRepository())
+        context?.let {
+            viewModel = SGDViewModel(LocalRepository(it))
+        }
         return inflater.inflate(R.layout.layout_sgd_fagment, container, false)
 
     }
@@ -59,7 +61,6 @@ class SGDFragment : BaseFragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     adapter.notifyDataSetChanged()
-
                 }, {})
         )
     }

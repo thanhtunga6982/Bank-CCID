@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
-import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
-import com.example.app.bank.main.detailUser.DetailUserFragment
+import com.example.app.bank.maindtu.dautu.link.InvestLinkFragment
 import com.example.app.bank.maindtu.dautu.sangiaodich.SGDFragment
 import kotlinx.android.synthetic.main.layout_header_app.*
 import kotlinx.android.synthetic.main.layout_invest.*
+import kotlinx.android.synthetic.main.layout_invest.view.*
 
 class InvestFragment : BaseFragment() {
 
@@ -38,11 +38,15 @@ class InvestFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvTitleHeader.text = "Đầu tư"
-        tvMoneyAsset.text = user.totalasset
+
+
+        tvMoneyAsset.text = user.money
         imgClose.setOnClickListener {
             popBackStack()
         }
-        println(LocalRepository().getUser())
+        tvTitleLink.setOnClickListener {
+            replaceFragment(InvestLinkFragment.newInstance(user),true)
+        }
         btnTransaction.setOnClickListener {
             replaceFragment(SGDFragment(), true)
         }

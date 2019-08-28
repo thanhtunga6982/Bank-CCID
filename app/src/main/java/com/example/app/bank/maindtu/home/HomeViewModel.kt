@@ -22,6 +22,7 @@ class HomeViewModel(var localRepository: LocalRepository){
                 loadingSubject.onNext(true)
             }
             .doOnSuccess {
+                println("Ppppp"+it)
                 listUser.addAll(it)
             }
             .doFinally {

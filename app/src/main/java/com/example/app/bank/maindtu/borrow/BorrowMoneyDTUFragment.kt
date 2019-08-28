@@ -36,7 +36,9 @@ class BorrowMoneyDTUFragment : BaseFragment() {
 
     private lateinit var viewModel: BorrowMoneyDTUViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = BorrowMoneyDTUViewModel(LocalRepository())
+        context?.let {
+            viewModel = BorrowMoneyDTUViewModel(LocalRepository(it))
+        }
         arguments?.let {
             viewModel.user = it.getParcelable(USER_CURRENT_DTU_BORROW)
         }

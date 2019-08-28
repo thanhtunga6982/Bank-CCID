@@ -41,7 +41,9 @@ class EditProfileBankFragment : BaseFragment() {
         arguments?.let {
             user = it.getParcelable(KEY_PROFILE)
         }
-        viewModel = EditProfileBankViewModel(LocalRepository())
+        context?.let {
+            viewModel = EditProfileBankViewModel(LocalRepository(it))
+        }
         return inflater.inflate(com.example.app.bank.R.layout.fragment_edit_profile, container, false)
     }
 
