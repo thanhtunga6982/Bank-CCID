@@ -1,27 +1,34 @@
-package com.example.app.bank.main.detailUser
+package com.example.app.bank.maindtu.detailUser
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.base.BaseFragmentContainer
+import com.example.app.bank.data.model.PdfBus
 import com.example.app.bank.data.model.User
+import com.example.app.bank.data.source.RxBus
 import com.example.app.bank.dialog.BorrowMoneyErrorDialog
 import com.example.app.bank.dialog.BorrowMoneySuccessDialog
 import com.example.app.bank.dialog.DialogSGDSussess
 import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.visible
-import com.example.app.bank.maindtu.dautu.HistoryInvestFragment
+import com.example.app.bank.maindtu.pdf.PDFTraCICFragment
+import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_detail_user.*
 import kotlinx.android.synthetic.main.layout_detail_user.*
 import kotlinx.android.synthetic.main.layout_header_app.*
 
-class DetailUserFragment() : BaseFragment() {
+class DetailUserFragment() : BaseFragment(), View.OnClickListener {
+
+
     companion object {
         private const val USER_DETAIL = "user_detail"
         private const val USER_DETAIL_CHECK = "user_detail_check"
@@ -32,6 +39,8 @@ class DetailUserFragment() : BaseFragment() {
             }
         }
     }
+
+    private var firebase = FirebaseDatabase.getInstance().reference
 
     private var isCheckInvest = false;
     private lateinit var dialogDetail: BorrowMoneySuccessDialog
@@ -57,21 +66,44 @@ class DetailUserFragment() : BaseFragment() {
         initClick()
     }
 
+    @SuppressLint("CheckResult")
     private fun initClick() {
         if (isCheckInvest) {
             btnCIC.visible()
+            btnApply.visible()
         } else {
             btnCIC.gone()
+            btnApply.gone()
         }
-        btnCIC.setOnClickListener {
-            val moneyBorrow = user.moneyBorrow.replace(",", "").toInt()
-            val totalAsset = user.totalasset.replace(",", "").toInt()
-            handleClickCIC(totalAsset, moneyBorrow)
-        }
-        imgClose.setOnClickListener {
-            parentFragment?.let {
-                if (it is BaseFragmentContainer) {
-                    popBackStack()
+        btnApply.isEnabled = false
+        btnCIC.setOnClickListener(this)
+        btnApply.setOnClickListener(this)
+        imgClose.setOnClickListener(this)
+        RxBus.listen(PdfBus::class.java)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                if (it.isRead) {
+                    btnApply.isEnabled = true
+                }
+            }, {})
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0) {
+            btnCIC -> {
+                replaceFragment(PDFTraCICFragment(), true)
+            }
+            btnApply -> {
+                val moneyBorrow = user.moneyBorrow.replace(",", "").toInt()
+                val totalAsset = user.totalasset.replace(",", "").toInt()
+                handleClickCIC(totalAsset, moneyBorrow)
+            }
+            imgClose -> {
+                parentFragment?.let {
+                    if (it is BaseFragmentContainer) {
+                        popBackStack()
+                    }
                 }
             }
         }
@@ -91,6 +123,8 @@ class DetailUserFragment() : BaseFragment() {
     }
 
 
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun handleClickCIC(totalAsset: Int, moneyBorrow: Int) {
         addDisposables(viewModel.timerDelayProgressbar
             .subscribeOn(Schedulers.io())
@@ -103,13 +137,15 @@ class DetailUserFragment() : BaseFragment() {
                     } else {
                         dialogDetailError.show(
                             childFragmentManager,
-                            BorrowMoneySuccessDialog::class.java.simpleName
+                            BorrowMoneyErrorDialog::class.java.simpleName
                         )
                         viewModel.autoDismissDialog()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
                                 dialogDetailError.dismiss()
+                                user.isCheckMoney = true
+                                popBackStackTagName("apply_invest")
                             }, {})
                     }
                 } else {
@@ -117,6 +153,7 @@ class DetailUserFragment() : BaseFragment() {
                 }
             })
     }
+
 
     @SuppressLint("CheckResult")
     private fun handleShowBorrowMoneySuccessDialog(borrowMoneyErrorDialog: BorrowMoneySuccessDialog) {
@@ -145,13 +182,30 @@ class DetailUserFragment() : BaseFragment() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe {
-                            replaceFragment(HistoryInvestFragment.newInstance(user), false)
+                            val moneyBorrow = user.moneyBorrow.replace(",", "")
+                            parentFragment.let {
+                                if (it is BaseFragmentContainer) {
+                                    it.setMoney(moneyBorrow)
+                                    popBackStackTagName("apply_invest")
+                                }
+                            }
+
+                            // set User to listHistory
+                            handleUpdateHistory()
+
+                            //remove User
+                            firebase.child("listLending").child(user.key).removeValue()
                         })
                 } else {
-
                     progressBarDetail.visible()
                 }
             })
+    }
+
+    private fun handleUpdateHistory() {
+        val id = firebase.push().key
+        firebase.child("listHistory").child(id.toString()).setValue(user)
+
     }
 
     override fun onBindViewModel() {

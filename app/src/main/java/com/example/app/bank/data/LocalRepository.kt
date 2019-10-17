@@ -2,6 +2,7 @@ package com.example.app.bank.data
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.example.app.bank.data.model.Bank
 import com.example.app.bank.data.model.User
 import com.example.app.bank.data.source.RemoteDataSouce
 import com.example.app.bank.extention.ShareReferences
@@ -15,6 +16,40 @@ import io.reactivex.Single
 
 
 class LocalRepository(var context: Context?) : RemoteDataSouce {
+    override fun getUserHistory(): Single<MutableList<User>> {
+        return Single.create<MutableList<User>> {
+            FirebaseDatabase.getInstance().reference
+                .child("listHistory")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        it.onError(error.toException())
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val newsList = User().fromDataSnapshottoList(snapshot)
+                        it.onSuccess(newsList)
+                    }
+                })
+        }
+    }
+
+
+    override fun getBank(): Single<MutableList<User>> {
+        return Single.create<MutableList<User>> {
+            FirebaseDatabase.getInstance().reference
+                .child("listUser")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        it.onError(error.toException())
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val newsList = User().fromDataSnapshottoList(snapshot)
+                        it.onSuccess(newsList)
+                    }
+                })
+        }
+    }
 
     private val sharePref = ShareReferences.defaultPrefs(context)
 

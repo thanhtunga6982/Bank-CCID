@@ -11,6 +11,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_title_invest">Số dư tài khoản</string>
+    <string name="tv_wait_access">Cơ quan công chứng đang xác nhận . . . </string>
+    <string name="tv_wait_access_2">Sở tài nguyên đang xác nhận . . .  </string>
 
     <string-array name="detail_data_area">
         <item>Đà Nẵng </item>

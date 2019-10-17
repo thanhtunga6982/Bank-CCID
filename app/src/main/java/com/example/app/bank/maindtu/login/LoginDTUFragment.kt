@@ -70,7 +70,6 @@ class LoginDTUFragment : BaseFragment() {
                 viewModel.checkFingerprint(it)
             }
             fingerDialogFragment = FingerDialogFragment()
-            initView()
             initListener()
             edtUserName.setText("thanhtunga0000@gmail.com")
             edtPasswordDTU.setText("Thanhtung123123")
@@ -78,12 +77,6 @@ class LoginDTUFragment : BaseFragment() {
         FirebaseApp.initializeApp(context)
         auth = FirebaseAuth.getInstance()
 
-    }
-
-    private fun initView() {
-        btnLogin.setOnClickListener {
-            replaceFragment(HomeFragment(), true)
-        }
     }
 
     override fun onBindViewModel() {
@@ -142,7 +135,6 @@ class LoginDTUFragment : BaseFragment() {
                     if (task.isSuccessful) {
                         val idToken = task.result?.token
                         idToken?.let {
-                            println("xxxxxO$it")
                             viewModel.setToken(it)
                         }
                     } else {
@@ -157,10 +149,13 @@ class LoginDTUFragment : BaseFragment() {
             containerProgressbarLogin.visible()
             auth.signInWithEmailAndPassword(email, passWord)
                 .addOnCompleteListener { task ->
+
                     if (task.isSuccessful) {
                         handePostUIDUser(email)
                     } else {
                         containerProgressbarLogin.gone()
+
+                        tvCheckPassword.text = "Email hoặc Password không đúng"
                         if (!viewModel.isInternetAvailable(ctx)) {
                             containerProgressbarLogin.gone()
                             tvCheckPassword.text =
@@ -176,7 +171,7 @@ class LoginDTUFragment : BaseFragment() {
         Handler().postDelayed({
             fingerDialogFragment.apply {
                 this.onReplaceFragment = {
-                    replaceFragment(HomeFragment(), true)
+                    
                 }
             }.show(childFragmentManager, FingerDialogFragment::class.java.simpleName)
 
@@ -225,4 +220,3 @@ class LoginDTUFragment : BaseFragment() {
             }, {})
     }
 }
-

@@ -58,7 +58,6 @@ class FingerprintHandler(private val context: Context) : FingerprintManager.Auth
         result: FingerprintManager.AuthenticationResult
     ) {
         onFingerprintSuccess()
-        Toast.makeText(context, "Success!", Toast.LENGTH_LONG).show()
     }
 
 }

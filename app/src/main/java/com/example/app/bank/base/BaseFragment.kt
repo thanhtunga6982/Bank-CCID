@@ -15,6 +15,13 @@ abstract class BaseFragment() : Fragment() {
             }
         }
     }
+    fun removeFragment(fragment: Fragment) {
+        parentFragment?.let {
+            if (it is BaseFragmentContainer) {
+                it.removeFragment(fragment)
+            }
+        }
+    }
 
     fun addFragment(fragment: Fragment, isAddBackStack: Boolean, tagNameBackStack: String? = null) {
         parentFragment?.let {
@@ -23,7 +30,16 @@ abstract class BaseFragment() : Fragment() {
             }
         }
     }
+
     fun popBackStack() {
+        parentFragment?.let {
+            if (it is BaseFragmentContainer) {
+                it.childFragmentManager.popBackStack()
+            }
+        }
+    }
+
+    fun popBackStackPDF(isback: Boolean) {
         parentFragment?.let {
             if (it is BaseFragmentContainer) {
                 it.childFragmentManager.popBackStack()

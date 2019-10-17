@@ -13,10 +13,9 @@ import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.visible
-import com.example.app.bank.main.borrowmoney.list.LendingMoneyViewModel
-import com.example.app.bank.main.detailUser.DetailUserFragment
 import com.example.app.bank.maindtu.borrow.BorrowMoneyDTUFragment
-import com.example.app.bank.maindtu.dautu.InvestFragment
+import com.example.app.bank.maindtu.detailUser.DetailUserFragment
+import com.example.app.bank.maindtu.detailUser.dautu.InvestFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -37,6 +36,7 @@ class HomeFragment : BaseFragment() {
             }
         }
     }
+
 
     private var user = User()
     private lateinit var adapter: HomeAdapter
@@ -59,7 +59,9 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = HomeAdapter(viewModel.listUser)
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(context).apply { linearLayoutManager = this }
+            layoutManager = LinearLayoutManager(context).apply {
+                linearLayoutManager = this
+            }
             adapter = this@HomeFragment.adapter
             val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_fall_down)
             layoutAnimation = controller

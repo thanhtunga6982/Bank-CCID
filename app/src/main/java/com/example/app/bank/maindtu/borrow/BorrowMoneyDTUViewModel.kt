@@ -49,8 +49,18 @@ class BorrowMoneyDTUViewModel(private var localRepository: LocalRepository) {
     }
 
     fun validateMoneyBorrow(edtMoneyBorrow: String) {
-        userbank.moneyBorrow = edtMoneyBorrow
-        checkButtonState()
+        if (checkMoneyMillion(edtMoneyBorrow)) {
+            userbank.moneyBorrow = edtMoneyBorrow
+            checkButtonState()
+        } else {
+            userbank.moneyBorrow = ""
+            checkButtonState()
+        }
+    }
+
+    fun checkMoneyMillion(edtMoneyBorrow: String): Boolean {
+
+        return edtMoneyBorrow.length > 7
     }
 
     fun validateInterest(edtInterest: String) {
@@ -63,11 +73,11 @@ class BorrowMoneyDTUViewModel(private var localRepository: LocalRepository) {
         checkButtonState()
     }
 
-    fun handleDataSpinnerArea(textSelect : String){
+    fun handleDataSpinnerArea(textSelect: String) {
         user.address = textSelect
     }
 
-    fun handleDataSpinnerAssetTax(textSelect : String){
+    fun handleDataSpinnerAssetTax(textSelect: String) {
         user.assettax = textSelect
     }
 

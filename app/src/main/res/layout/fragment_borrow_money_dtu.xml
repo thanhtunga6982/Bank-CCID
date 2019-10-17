@@ -2,8 +2,7 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
->
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
             android:id="@+id/layoutHeader"
@@ -16,6 +15,8 @@
             android:orientation="vertical"
             android:layout_width="2dp"
             android:layout_height="match_parent"/>
+
+
     <!--item1-->
     <TextView
             android:id="@+id/tvTitleArea"
@@ -142,22 +143,36 @@
             app:layout_constraintTop_toBottomOf="@id/spinnerAssetTax"
             app:layout_constraintStart_toStartOf="@id/guideLide"/>
 
-
     <EditText
             android:id="@+id/edtInterest"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvPercent"
             android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
             android:padding="6dp"
-            android:layout_marginEnd="10dp"
+            android:maxLength="3"
+            android:inputType="numberDecimal"
             android:entries="@array/detail_data_area"
             android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@id/spinnerAssetTax"
             app:layout_constraintStart_toEndOf="@id/guideLide"/>
 
+    <TextView
+            android:id="@+id/tvPercent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="%"
+            android:textSize="20dp"
+            android:textColor="@color/browser_actions_text_color"
+            app:layout_constraintStart_toEndOf="@+id/edtInterest"
+            app:layout_constraintTop_toTopOf="@+id/edtInterest"
+            app:layout_constraintBottom_toBottomOf="@id/edtInterest"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
+
     <View
+            android:id="@+id/viewPercent"
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:background="@color/colorGray"
@@ -241,6 +256,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtPlan"
             app:layout_constraintStart_toStartOf="@id/guideLide"/>
+    <TextView
+            android:id="@+id/tvCheckCondition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/colorRedDTU"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtPlan"
+
+    />
 
     <Button
             android:id="@+id/btnConfirm"
@@ -253,6 +280,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/edtPlan"
+            app:layout_constraintTop_toBottomOf="@id/tvCheckCondition"
             android:background="@drawable/bg_btn_default_dautu"/>
 </android.support.constraint.ConstraintLayout>

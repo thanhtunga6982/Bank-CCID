@@ -11,7 +11,9 @@ import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.afterTextChanged
+import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.textChanged
+import com.example.app.bank.extention.visible
 import com.example.app.bank.maindtu.home.HomeFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -81,6 +83,7 @@ class BorrowMoneyDTUFragment : BaseFragment() {
         imgClose.setOnClickListener {
             popBackStack()
         }
+
         spinnerArea.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
                 val item = parent.getItemAtPosition(pos)
@@ -104,7 +107,18 @@ class BorrowMoneyDTUFragment : BaseFragment() {
         }
 
         edtMoney.textChanged {
+
             viewModel.validateMoneyBorrow(it)
+            when {
+                it.length > 7 -> tvCheckCondition.gone()
+                it.isEmpty() -> {
+                    tvCheckCondition.gone()
+                }
+                else -> {
+                    tvCheckCondition.visible()
+                    tvCheckCondition.text = "Số tiền vay phải ít nhất 1.000.000 "
+                }
+            }
 
         }
         edtInterest.afterTextChanged {

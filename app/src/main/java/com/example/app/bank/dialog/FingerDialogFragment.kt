@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseDialog
 import java.io.IOException
@@ -43,12 +44,16 @@ class FingerDialogFragment : BaseDialog() {
     internal var onReplaceFragment: () -> Unit = {}
     private lateinit var fingerDialogFragment: FingerDialogFragment
 
-
     override fun setContentDialog(dialog: Dialog) {
         dialog.setContentView(R.layout.layout_fingerprint_success)
     }
 
-    override fun initListeners(dialog: Dialog) = Unit
+    override fun initListeners(dialog: Dialog) {
+        val tvDialog = dialog.findViewById<TextView>(R.id.tvClose)
+        tvDialog.setOnClickListener {
+            dismiss()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fingerDialogFragment = FingerDialogFragment()
@@ -56,6 +61,7 @@ class FingerDialogFragment : BaseDialog() {
             keyguardManager = it.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
             fingerprintManager = it.getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
         }
+
         keyStore = KeyStore.getInstance("AndroidKeyStore")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -71,6 +77,7 @@ class FingerDialogFragment : BaseDialog() {
                 FingerprintHandler(it).apply {
                     fingerprintManager.let {
                         startAuth(it, cryptoObject)
+
                     }
                     this.onFingerprintSuccess = {
                         onReplaceFragment()
@@ -95,6 +102,7 @@ class FingerDialogFragment : BaseDialog() {
         }
     }
 
+
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(Build.VERSION_CODES.M)
     fun initCipher(): Boolean {
@@ -105,6 +113,7 @@ class FingerDialogFragment : BaseDialog() {
                         + KeyProperties.BLOCK_MODE_CBC + "/"
                         + KeyProperties.ENCRYPTION_PADDING_PKCS7
             )
+
         } catch (e: NoSuchAlgorithmException) {
             throw RuntimeException("Failed to get Cipher", e)
         } catch (e: NoSuchPaddingException) {

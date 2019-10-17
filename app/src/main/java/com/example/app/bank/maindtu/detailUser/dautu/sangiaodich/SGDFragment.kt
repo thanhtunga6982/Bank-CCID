@@ -1,4 +1,4 @@
-package com.example.app.bank.maindtu.dautu.sangiaodich
+package com.example.app.bank.maindtu.detailUser.dautu.sangiaodich
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,7 +9,8 @@ import android.view.animation.AnimationUtils
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
-import com.example.app.bank.main.detailUser.DetailUserFragment
+import com.example.app.bank.data.model.User
+import com.example.app.bank.maindtu.detailUser.DetailUserFragment
 import com.example.app.bank.maindtu.home.HomeAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +22,19 @@ class SGDFragment : BaseFragment() {
 
     private lateinit var adapter: HomeAdapter
     private lateinit var viewModel: SGDViewModel
+
+    companion object {
+        private const val USER_CURRENT_DTU_INVEST = "user_current_dtu_invest_sgd"
+        fun newInstance(user: User): SGDFragment {
+            return SGDFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(USER_CURRENT_DTU_INVEST, user)
+                }
+            }
+        }
+    }
+
+    private var user = User()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         context?.let {

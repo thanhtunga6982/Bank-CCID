@@ -68,11 +68,11 @@ class LoginDTUViewModel(
                 fingerprintManager = it.getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
                 if (!fingerprintManager.isHardwareDetected) {
                     // Device doesn't support fingerprint authentication
-                    Toast.makeText(it, "isHardwareDetectedssssssssssssssssss", Toast.LENGTH_LONG).show()
+                    Toast.makeText(it, "Điện thoại của bạn không hỗ trợ xác thực vân ", Toast.LENGTH_LONG).show()
                     return false
                 } else if (!fingerprintManager.hasEnrolledFingerprints()) {
                     // User hasn't enrolled any fingerprints to authenticate with
-                    Toast.makeText(it, "hasEnrolledFingerprints", Toast.LENGTH_LONG).show()
+                    Toast.makeText(it, "Chưa đăng ký vân tay ", Toast.LENGTH_LONG).show()
                     return false
                 } else {
                     stateCheckFinger.onNext(true)
@@ -146,7 +146,6 @@ class LoginDTUViewModel(
             )
             //Generate the key//
             keyGenerator.generateKey()
-
         } catch (exc: KeyStoreException) {
             exc.printStackTrace()
             throw FingerprintException(exc)

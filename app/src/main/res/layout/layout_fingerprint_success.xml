@@ -18,16 +18,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+            android:id="@+id/tvFingerprint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textSize="16dp"
-            android:text="Bạn có thể xác thực bằng dấu vân tay"
+            android:text="Xác thực bằng dấu vân tay"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgFingerprint" />
+
+
+    <TextView
+            android:id="@+id/tvClose"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:background="@drawable/img_close_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFingerprint" />
 </android.support.constraint.ConstraintLayout>

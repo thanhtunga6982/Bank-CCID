@@ -1,4 +1,4 @@
-package com.example.app.bank.maindtu.dautu.link
+package com.example.app.bank.maindtu.detailUser.dautu.link
 
 
 import android.support.v7.widget.RecyclerView

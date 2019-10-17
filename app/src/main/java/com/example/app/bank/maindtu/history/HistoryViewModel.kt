@@ -1,4 +1,4 @@
-package com.example.app.bank.maindtu.dautu.sangiaodich
+package com.example.app.bank.maindtu.history
 
 import android.annotation.SuppressLint
 import com.example.app.bank.data.LocalRepository
@@ -7,20 +7,20 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
-class SGDViewModel(var localRepository : LocalRepository){
+class HistoryViewModel(var localRepository: LocalRepository) {
 
-    internal var listUser = mutableListOf<User>()
+    internal var listHistory = mutableListOf<User>()
     internal var loadingSubject = BehaviorSubject.create<Boolean>()
 
     @SuppressLint("CheckResult")
-    fun getUserLending(): Single<MutableList<User>> =
-        localRepository.getUserLending()
+    fun getUserHistory(): Single<MutableList<User>> =
+        localRepository.getUserHistory()
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {
                 loadingSubject.onNext(true)
             }
             .doOnSuccess {
-                listUser.addAll(it)
+                listHistory.addAll(it)
             }
             .doFinally {
                 loadingSubject.onNext(false)
