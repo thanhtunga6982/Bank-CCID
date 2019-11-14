@@ -11,7 +11,7 @@ import com.example.app.bank.base.BaseFragmentContainer
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.visible
-import com.example.app.bank.main.detailUser.DetailUserFragment
+import com.example.app.bank.maindtu.detailUser.DetailUserFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_header_app.*
@@ -23,7 +23,9 @@ class LendingMoneyFragment() : BaseFragment() {
     private lateinit var viewModel: LendingMoneyViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = LendingMoneyViewModel(LocalRepository())
+        context?.let {
+            viewModel = LendingMoneyViewModel(LocalRepository(it))
+        }
         return inflater.inflate(R.layout.lending_money_fragment, container, false)
     }
 
@@ -45,7 +47,7 @@ class LendingMoneyFragment() : BaseFragment() {
 
     private fun initClick() {
         adapter.userClickListeners = {
-            replaceFragment(DetailUserFragment.newInstance(it), true)
+            replaceFragment(DetailUserFragment.newInstance(it,false), true)
         }
         imgClose.setOnClickListener {
             parentFragment?.let {

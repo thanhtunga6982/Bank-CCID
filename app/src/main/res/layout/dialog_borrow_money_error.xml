@@ -28,7 +28,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Tra CIC Thất bại "
+            android:text="Không phù hợp "
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

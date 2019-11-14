@@ -10,7 +10,6 @@ import com.example.app.bank.main.login.MainBankContainer
 
 class MainActivity : BaseActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

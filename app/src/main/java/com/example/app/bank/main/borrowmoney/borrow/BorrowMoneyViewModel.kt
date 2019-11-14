@@ -10,10 +10,9 @@ import io.reactivex.subjects.BehaviorSubject
 
 class BorrowMoneyViewModel(var localRepository: LocalRepository) {
     var name = ""
-    var userbank = User()
-    var listUser = mutableListOf(userbank)
-
+    var     userbank = User()
     var user = User()
+    var listUser = mutableListOf(userbank)
     internal val stateButtonSubject = BehaviorSubject.create<Boolean>()
     private var firebase = FirebaseDatabase.getInstance().reference.child("listLending")
 
@@ -78,6 +77,5 @@ class BorrowMoneyViewModel(var localRepository: LocalRepository) {
                 }
             }
         }
-
     }
 }

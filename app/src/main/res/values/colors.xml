@@ -8,4 +8,7 @@
     <color name="colorGreen">#28D8A1</color>
     <color name="colorWhite">#FFF</color>
     <color name="colorGray">#484848</color>
+    <color name="colorRedDTU">#830404</color>
+    <color name="colorRedDTUBlur">#2D830404</color>
+
 </resources>

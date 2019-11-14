@@ -29,7 +29,9 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
     private var firebase = FirebaseDatabase.getInstance().reference
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = LoginFragmentViewModel(LocalRepository())
+        context?.let {
+            viewModel = LoginFragmentViewModel(LocalRepository(it))
+        }
         auth = FirebaseAuth.getInstance()
 
         return inflater.inflate(R.layout.fragment_login_app, container, false)
@@ -131,7 +133,6 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
                 for (i in 0 until it.size) {
                     if (it[i].email == email) {
                         val userUpdates = HashMap<String, String>()
@@ -151,7 +152,7 @@ class LoginFragment : BaseFragment(), View.OnTouchListener {
                                     totalasset = totalasset,
                                     address =  address,
                                     sex = sex,
-                                    email = email,
+                                    email = this.email,
                                     phone = phone,
                                     cmnd = cmnd)
                                 replaceFragment(

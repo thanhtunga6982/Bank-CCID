@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools">
+
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/viewHeader"
+            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+                android:id="@+id/imgCloseEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_16dp"
+                android:padding="20dp"/>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgCircleAvatarEdit"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:src="@drawable/img_error"/>
+
+        <EditText
+                android:id="@+id/edtNameProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="sans-serif-light"
+                app:layout_constraintTop_toBottomOf="@id/imgCircleAvatarEdit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Thanh Tung"/>
+        <EditText
+                android:id="@+id/edtAddressProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="sans-serif-light"
+                app:layout_constraintTop_toBottomOf="@id/edtNameProfile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="KonTum, VietNam"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <include
+            android:id="@+id/viewBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/viewHeader"
+            layout="@layout/layout_header_profile"/>
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewBody">
+        <LinearLayout
+                android:id="@+id/llFormProfile"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+            <!--Emai-->
+            <TextView
+                    android:id="@+id/tvEmailProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Email"
+                    android:textColor="@color/colorPrimary"
+                    tools:ignore="MissingConstraints"/>
+            <EditText
+                    android:id="@+id/edtValueEmailProfileEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="thanhtunga0000@gmai.com"
+                    tools:ignore="MissingConstraints"/>
+            <!--CMND-->
+            <TextView
+                    android:id="@+id/tvCmndlProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="CMND"
+                    android:textColor="@color/colorPrimary"
+                    tools:ignore="MissingConstraints"/>
+            <EditText
+                    android:id="@+id/edtValueCmndProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="123123123"
+                    tools:ignore="MissingConstraints"/>
+
+            <!--Tai san thue chap-->
+            <TextView
+                    android:id="@+id/tvAssetTaxProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Tài sản thuê chấp"
+                    android:textColor="@color/colorPrimary"
+                    tools:ignore="MissingConstraints"/>
+            <EditText
+                    android:id="@+id/edtValueAssetTaxProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="3000000"
+                    tools:ignore="MissingConstraints"/>
+            <!--sex-->
+            <TextView
+                    android:id="@+id/tvSexProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Giới tính "
+                    android:textColor="@color/colorPrimary"
+                    tools:ignore="MissingConstraints"/>
+
+            <RadioGroup
+                    android:id="@+id/rgpSex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <RadioButton
+                        android:id="@+id/rbnMale"
+                        android:text="Nam"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <RadioButton
+                        android:id="@+id/rbnFemale"
+                        android:text="Nữ"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RadioGroup>
+
+            <Button
+                    android:id="@+id/btnAgree"
+                    android:text="Apply"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

@@ -34,10 +34,11 @@ class BorrowMoneyFragment : BaseFragment() {
 
     private lateinit var viewModel: BorrowMoneyViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = BorrowMoneyViewModel(LocalRepository())
+        viewModel = BorrowMoneyViewModel(LocalRepository(context))
         arguments?.let {
             viewModel.userbank = it.getParcelable(USER_CURRENT)
         }
+
         return inflater.inflate(R.layout.fragment_borrow_money, container, false)
     }
 
