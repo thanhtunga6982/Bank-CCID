@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import com.example.app.bank.R
 
 open class BaseFragmentContainer() : Fragment() {
-    var moneyResult = ""
-    var isCheckCICError = false
+    private var moneyResult = ""
+    private var logOut = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_base_container, container, false)
@@ -46,6 +46,15 @@ open class BaseFragmentContainer() : Fragment() {
     fun getMoney(): String {
         return moneyResult
     }
+
+    fun setLogout(isLogout: Boolean) {
+        logOut = isLogout
+    }
+
+    fun getLogout(): Boolean {
+        return logOut
+    }
+
 
     internal fun getChildFragment(): Fragment? = childFragmentManager.findFragmentById(R.id.flBaseContainer)
 }

@@ -26,7 +26,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
             android:textColor="@color/colorWhite"
-            android:text="dau tu"
+            android:text="Đầu tư "
             android:background="@drawable/bg_border_button_radius"
             app:layout_constraintStart_toEndOf="@id/btnChovay"
             app:layout_constraintTop_toTopOf="parent"

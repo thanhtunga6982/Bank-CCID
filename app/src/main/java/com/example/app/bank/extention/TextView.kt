@@ -24,6 +24,26 @@ fun TextView.afterTextChanged(afterTextChange: (String) -> Unit) {
     })
 }
 
+fun TextView.afterTextChangedOfMoney(afterTextChange: (String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(edt: Editable?) {
+
+            afterTextChange.invoke(edt.toString())
+        }
+
+        override fun beforeTextChanged(char: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            //no-opt
+        }
+
+        override fun onTextChanged(char: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            //no-opt
+            removeTextChangedListener(this)
+        }
+    })
+}
+
+
+
 fun TextView.textChanged(textChange: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(edt: Editable?) {

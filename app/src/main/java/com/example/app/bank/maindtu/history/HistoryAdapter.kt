@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.item_lending_money.view.*
 
 class HistoryAdapter(var listHistory: MutableList<User>) : RecyclerView.Adapter<HistoryAdapter.HistoryVH>() {
 
+    internal var deleteUserListeners: (user: User) -> Unit = {}
     internal var userClickListeners: (user: User) -> Unit = {}
     override fun onCreateViewHolder(container: ViewGroup, position: Int): HistoryVH {
         return HistoryVH(container.inflate(R.layout.item_lending_money, false))
@@ -31,6 +32,10 @@ class HistoryAdapter(var listHistory: MutableList<User>) : RecyclerView.Adapter<
                 itemView.apply {
                     setOnClickListener {
                         userClickListeners(listHistory[adapterPosition])
+                    }
+                    setOnLongClickListener {
+                        deleteUserListeners(listHistory[adapterPosition])
+                        true
                     }
                     tvEmail.text = email
                     tvName.text = name

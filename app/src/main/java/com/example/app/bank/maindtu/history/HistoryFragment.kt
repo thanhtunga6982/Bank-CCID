@@ -1,6 +1,8 @@
 package com.example.app.bank.maindtu.history
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.extention.gone
 import com.example.app.bank.extention.visible
+import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_history_connect.*
@@ -21,6 +24,8 @@ class HistoryFragment : BaseFragment() {
     private var linearLayoutManager = LinearLayoutManager(context)
     private lateinit var adapter: HistoryAdapter
     private lateinit var viewModel: HistoryViewModel
+    private var firebase = FirebaseDatabase.getInstance().reference
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         context?.let {
@@ -46,6 +51,21 @@ class HistoryFragment : BaseFragment() {
             layoutAnimation = controller
             scheduleLayoutAnimation()
             this@HistoryFragment.adapter.notifyDataSetChanged()
+        }
+        adapter.deleteUserListeners = { user ->
+            context?.let {
+                AlertDialog.Builder(it)
+                    .setMessage("Bạn có muôn xoá người này không?")
+                    .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+                        firebase.child("listHistory").child(user.key).removeValue()
+                        viewModel.listHistory.remove(user)
+                        adapter.notifyDataSetChanged()
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show()
+            }
+
         }
     }
 

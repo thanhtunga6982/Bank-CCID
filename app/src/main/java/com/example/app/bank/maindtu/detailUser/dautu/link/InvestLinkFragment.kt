@@ -67,18 +67,22 @@ class InvestLinkFragment() : BaseFragment() {
             viewModel.getBank()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ user ->
-                    user.forEach {
+                .subscribe({ users ->
+                    users.forEach {
                         if (it.id == this.user.id) {
                             it.linkBank?.let { bank ->
                                 viewModel.listBank.addAll(bank)
+
                             }
                         }
                     }
                     adapter.notifyDataSetChanged()
                 }, {})
         )
-
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.listBank.clear()
+    }
 }

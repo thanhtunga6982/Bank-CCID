@@ -2,6 +2,7 @@ package com.example.app.bank.maindtu.detailUser.dautu
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +60,24 @@ class InvestFragment : BaseFragment() {
         }
         btnHistory.setOnClickListener {
             replaceFragment(HistoryFragment(), true)
+        }
+        tvTitleLogout.setOnClickListener {
+            context?.let { ctx ->
+                AlertDialog.Builder(ctx)
+                    .setMessage("Bạn có muốn đăng xuất không?")
+                    .setPositiveButton(android.R.string.yes) { dialog, which ->
+                        parentFragment?.let {
+                            if (it is BaseFragmentContainer) {
+                                it.setLogout(true)
 
+                            }
+                        }
+                        popBackStackTagName("loginDTU")
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show()
+            }
         }
 
     }
@@ -72,11 +90,9 @@ class InvestFragment : BaseFragment() {
     private fun handleMoney() {
         parentFragment.let {
             if (it is BaseFragmentContainer) {
-                println("xxxxx" + user.isCheckMoney)
                 if (user.isCheckMoney) {
                     tvMoneyAsset.text = user.money.toInt().moneyFormat()
                 } else {
-                    println("xxxxx" + it.getMoney())
                     if (user.money != "" && it.getMoney() != "") {
                         val result = user.money.toInt() - it.getMoney().toInt()
                         val userUpdates = HashMap<String, String>()
@@ -98,7 +114,7 @@ class InvestFragment : BaseFragment() {
                                 money = result
                             }
                         }
-
+//                        LocalRepository(context).saveUser(user)
                         //set Money in activity default
                         it.setMoney("")
                     } else {

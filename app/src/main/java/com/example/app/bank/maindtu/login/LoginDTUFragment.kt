@@ -17,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.app.bank.base.BaseFragment
+import com.example.app.bank.base.BaseFragmentContainer
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.dialog.FingerDialogFragment
@@ -64,8 +65,7 @@ class LoginDTUFragment : BaseFragment() {
             fingerprintManager = it.getSystemService(FINGERPRINT_SERVICE) as FingerprintManager
             keyStore = KeyStore.getInstance("AndroidKeyStore")
             keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
-            viewModel =
-                LoginDTUViewModel(keyguardManager, fingerprintManager, keyStore, keyGenerator, LocalRepository(it))
+            viewModel = LoginDTUViewModel(keyguardManager, fingerprintManager, keyStore, keyGenerator, LocalRepository(it))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 viewModel.checkFingerprint(it)
             }
@@ -84,9 +84,13 @@ class LoginDTUFragment : BaseFragment() {
             viewModel.stateCheckFinger
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it) {
-                        handleCheckfingerPrintSuccess()
+                .subscribe({ stateCheckFinger ->
+                    parentFragment?.let {
+                        if (it is BaseFragmentContainer) {
+                            if (stateCheckFinger && !it.getLogout()) {
+                                handleCheckfingerPrintSuccess()
+                            }
+                        }
                     }
                 }, {}),
             viewModel.loadingSubject
@@ -168,14 +172,16 @@ class LoginDTUFragment : BaseFragment() {
     }
 
     private fun handleCheckfingerPrintSuccess() {
-        Handler().postDelayed({
-            fingerDialogFragment.apply {
-                this.onReplaceFragment = {
-                    
-                }
-            }.show(childFragmentManager, FingerDialogFragment::class.java.simpleName)
+        if (LocalRepository(context).getToken() != "") {
+            Handler().postDelayed({
+                fingerDialogFragment.apply {
+                    this.onReplaceFragment = {
+                        replaceFragment(HomeFragment.newInstance(LocalRepository(context).getUserLocal()), true,"loginDTU")
+                    }
+                }.show(childFragmentManager, FingerDialogFragment::class.java.simpleName)
 
-        }, 1000)
+            }, 1000)
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -210,7 +216,7 @@ class LoginDTUFragment : BaseFragment() {
                                     timeBorrow = timeBorrow,
                                     linkBank = linkBank
                                 )
-                                replaceFragment(HomeFragment.newInstance(user), true)
+                                replaceFragment(HomeFragment.newInstance(user), true, "loginDTU")
                                 LocalRepository(context).saveUser(user)
                             }
                         }

@@ -2,6 +2,7 @@ package com.example.app.bank.maindtu.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import com.example.app.bank.R
 import com.example.app.bank.base.BaseFragment
+import com.example.app.bank.base.BaseFragmentContainer
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.gone
@@ -120,11 +122,13 @@ class HomeFragment : BaseFragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                val userFirst = viewModel.listUser[0]
-                viewModel.listUser.removeAt(0)
-                adapter.notifyItemRemoved(0)
-                viewModel.listUser.add(viewModel.listUser.size, userFirst)
-                adapter.notifyItemInserted(viewModel.listUser.size)
+                if (viewModel.listUser.size > 4) {
+                    val userFirst = viewModel.listUser[0]
+                    viewModel.listUser.removeAt(0)
+                    adapter.notifyItemRemoved(0)
+                    viewModel.listUser.add(viewModel.listUser.size, userFirst)
+                    adapter.notifyItemInserted(viewModel.listUser.size)
+                }
             }, {})
 
 }

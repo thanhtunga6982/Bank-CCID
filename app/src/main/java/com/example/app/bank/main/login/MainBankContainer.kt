@@ -11,7 +11,8 @@ import com.example.app.bank.maindtu.login.LoginDTUFragment
 class MainBankContainer : BaseFragmentContainer() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        replaceFragment(LoginDTUFragment(), true)
+//        init()
     }
 
 

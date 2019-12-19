@@ -42,7 +42,7 @@ class DetailUserFragment() : BaseFragment(), View.OnClickListener {
 
     private var firebase = FirebaseDatabase.getInstance().reference
 
-    private var isCheckInvest = false;
+    private var isCheckInvest = false
     private lateinit var dialogDetail: BorrowMoneySuccessDialog
     private lateinit var dialogDetailError: BorrowMoneyErrorDialog
     private lateinit var dialogSGDsussess: DialogSGDSussess
@@ -96,8 +96,7 @@ class DetailUserFragment() : BaseFragment(), View.OnClickListener {
             }
             btnApply -> {
                 val moneyBorrow = user.moneyBorrow.replace(",", "").toInt()
-                val totalAsset = user.totalasset.replace(",", "").toInt()
-                handleClickCIC(totalAsset, moneyBorrow)
+                handleClickCIC(user.money.toInt(), moneyBorrow)
             }
             imgClose -> {
                 parentFragment?.let {
@@ -132,6 +131,7 @@ class DetailUserFragment() : BaseFragment(), View.OnClickListener {
             .subscribe {
                 if (it) {
                     progressBarDetail.gone()
+
                     if (totalAsset >= moneyBorrow) {
                         handleShowBorrowMoneySuccessDialog(dialogDetail)
                     } else {

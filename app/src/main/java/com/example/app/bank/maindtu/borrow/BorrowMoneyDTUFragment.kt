@@ -2,23 +2,28 @@ package com.example.app.bank.maindtu.borrow
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import com.example.app.bank.R
+import android.widget.EditText
 import com.example.app.bank.base.BaseFragment
 import com.example.app.bank.data.LocalRepository
 import com.example.app.bank.data.model.User
 import com.example.app.bank.extention.afterTextChanged
 import com.example.app.bank.extention.gone
-import com.example.app.bank.extention.textChanged
 import com.example.app.bank.extention.visible
 import com.example.app.bank.maindtu.home.HomeFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_borrow_money_dtu.*
 import kotlinx.android.synthetic.main.layout_header_app.*
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.*
+
 
 class BorrowMoneyDTUFragment : BaseFragment() {
 
@@ -37,7 +42,11 @@ class BorrowMoneyDTUFragment : BaseFragment() {
     var listUser = mutableListOf<User>()
 
     private lateinit var viewModel: BorrowMoneyDTUViewModel
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         context?.let {
             viewModel = BorrowMoneyDTUViewModel(LocalRepository(it))
         }
@@ -45,7 +54,11 @@ class BorrowMoneyDTUFragment : BaseFragment() {
             viewModel.user = it.getParcelable(USER_CURRENT_DTU_BORROW)
         }
         listUser.add(viewModel.user)
-        return inflater.inflate(R.layout.fragment_borrow_money_dtu, container, false)
+        return inflater.inflate(
+            com.example.app.bank.R.layout.fragment_borrow_money_dtu,
+            container,
+            false
+        )
     }
 
     @SuppressLint("CheckResult")
@@ -62,7 +75,6 @@ class BorrowMoneyDTUFragment : BaseFragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 btnConfirm.isEnabled = it
-
             }
         )
     }
@@ -106,21 +118,12 @@ class BorrowMoneyDTUFragment : BaseFragment() {
             }
         }
 
-        edtMoney.textChanged {
-
-            viewModel.validateMoneyBorrow(it)
-            when {
-                it.length > 7 -> tvCheckCondition.gone()
-                it.isEmpty() -> {
-                    tvCheckCondition.gone()
-                }
-                else -> {
-                    tvCheckCondition.visible()
-                    tvCheckCondition.text = "Số tiền vay phải ít nhất 1.000.000 "
-                }
-            }
+        edtMoney.afterTextChanged {
 
         }
+
+        edtMoney.addTextChangedListener(onTextChangedListener(edtMoney))
+
         edtInterest.afterTextChanged {
             viewModel.validateInterest(it)
 
@@ -136,6 +139,54 @@ class BorrowMoneyDTUFragment : BaseFragment() {
         btnConfirm.setOnClickListener {
             viewModel.handleUpdateUser(listUser)
             replaceFragment(HomeFragment.newInstance(user = viewModel.user), true)
+        }
+    }
+
+    private fun onTextChangedListener(edtMoney: EditText): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                edtMoney.removeTextChangedListener(this)
+
+                try {
+                    var originalString = s.toString()
+                    val longval: Long?
+                    if (originalString.contains(",")) {
+                        originalString = originalString.replace(",".toRegex(), "")
+                    }
+                    longval = java.lang.Long.parseLong(originalString)
+
+                    val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
+                    formatter.applyPattern("#,###,###,###")
+                    val formattedString = formatter.format(longval)
+                    //setting text after format to EditText
+                    edtMoney.setText(formattedString)
+                    edtMoney.setSelection(edtMoney.text.length)
+                    viewModel.validateMoneyBorrow(formattedString)
+                    when {
+                        originalString.length >= 7 -> tvCheckCondition.gone()
+                        originalString.isEmpty() -> {
+                            tvCheckCondition.gone()
+                        }
+                        else -> {
+                            tvCheckCondition.visible()
+                            tvCheckCondition.text = "Số tiền vay phải ít nhất 1.000.000 "
+                        }
+                    }
+                } catch (nfe: NumberFormatException) {
+                    nfe.printStackTrace()
+                }
+
+                edtMoney.addTextChangedListener(this)
+
+            }
         }
     }
 }

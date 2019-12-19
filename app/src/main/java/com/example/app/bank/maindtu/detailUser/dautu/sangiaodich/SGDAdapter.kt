@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.item_lending_money.view.*
 class SGDAdapter(var listUser: MutableList<User>) : RecyclerView.Adapter<SGDAdapter.SGDViewHolder>() {
 
     internal var userClickListeners: (user: User) -> Unit = {}
+    internal var deleteUserListeners: (user: User) -> Unit = {}
     override fun onCreateViewHolder(container: ViewGroup, position: Int): SGDViewHolder {
         return SGDViewHolder(container.inflate(R.layout.item_lending_money, false))
     }
@@ -31,6 +32,7 @@ class SGDAdapter(var listUser: MutableList<User>) : RecyclerView.Adapter<SGDAdap
                     setOnClickListener {
                         userClickListeners(listUser[adapterPosition])
                     }
+
                     tvEmail.text = email
                     tvName.text = name
                     tvMoneyBorrow.text = moneyBorrow
